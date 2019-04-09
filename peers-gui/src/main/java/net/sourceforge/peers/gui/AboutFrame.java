@@ -115,12 +115,12 @@ public class AboutFrame extends JFrame implements ActionListener,
         pack();
     }
 
-    @Override
+    // @Override
     public void actionPerformed(ActionEvent e) {
         dispose();
     }
 
-    @Override
+    // @Override
     public void hyperlinkUpdate(HyperlinkEvent hyperlinkEvent) {
         if (EventType.ACTIVATED.equals(hyperlinkEvent.getEventType())) {
             try {

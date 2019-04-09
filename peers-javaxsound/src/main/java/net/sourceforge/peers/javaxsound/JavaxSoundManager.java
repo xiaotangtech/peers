@@ -97,7 +97,7 @@ public class JavaxSoundManager extends AbstractSoundManager {
         AccessController.doPrivileged(
             new PrivilegedAction<Void>() {
 
-                @Override
+                // @Override
                 public Void run() {
                     try {
                         targetDataLine = (TargetDataLine) AudioSystem.getLine(targetInfo);
@@ -151,7 +151,7 @@ public class JavaxSoundManager extends AbstractSoundManager {
         // AccessController.doPrivileged added for plugin compatibility
         AccessController.doPrivileged(new PrivilegedAction<Void>() {
 
-            @Override
+            // @Override
             public Void run() {
                 if (targetDataLine != null) {
                     targetDataLine.close();
@@ -170,7 +170,7 @@ public class JavaxSoundManager extends AbstractSoundManager {
         });
     }
 
-    @Override
+    // @Override
     public synchronized byte[] readData() {
         if (targetDataLine == null) {
             return null;

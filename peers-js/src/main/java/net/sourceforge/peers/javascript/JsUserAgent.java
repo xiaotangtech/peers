@@ -80,7 +80,7 @@ public class JsUserAgent extends Applet implements SipListener, WebLoggerOutput 
             config.setMediaMode(MediaMode.captureAndPlayback);
 
             executorService.submit(new Runnable() {
-                @Override
+                // @Override
                 public void run() {
 
                     try {
@@ -104,7 +104,7 @@ public class JsUserAgent extends Applet implements SipListener, WebLoggerOutput 
 
     public void close() {
         executorService.submit(new Runnable() {
-            @Override
+            // @Override
             public void run() {
                 userAgent.close();
             }
@@ -118,7 +118,7 @@ public class JsUserAgent extends Applet implements SipListener, WebLoggerOutput 
     public void register(final String userPart, final String password,
             final String domain, final String outboundProxy) {
         executorService.submit(new Runnable() {
-            @Override
+            // @Override
             public void run() {
                 config.setUserPart(userPart);
                 config.setPassword(password);
@@ -144,7 +144,7 @@ public class JsUserAgent extends Applet implements SipListener, WebLoggerOutput 
 
     public void invite(final String uri) {
         executorService.submit(new Runnable() {
-            @Override
+            // @Override
             public void run() {
                 String callId = Utils.generateCallID(userAgent.getConfig()
                         .getLocalInetAddress());
@@ -161,7 +161,7 @@ public class JsUserAgent extends Applet implements SipListener, WebLoggerOutput 
 
     public void unregister() {
         executorService.submit(new Runnable() {
-            @Override
+            // @Override
             public void run() {
                 try {
                     userAgent.unregister();
@@ -175,7 +175,7 @@ public class JsUserAgent extends Applet implements SipListener, WebLoggerOutput 
 
     public void terminate(final SipRequest sipRequest) {
         executorService.submit(new Runnable() {
-            @Override
+            // @Override
             public void run() {
                 userAgent.terminate(sipRequest);
             }
@@ -184,7 +184,7 @@ public class JsUserAgent extends Applet implements SipListener, WebLoggerOutput 
 
     public void pickupClicked(final SipRequest sipRequest) {
         executorService.submit(new Runnable() {
-            @Override
+            // @Override
             public void run() {
                 String callId = Utils.getMessageCallId(sipRequest);
                 DialogManager dialogManager = userAgent.getDialogManager();
@@ -196,7 +196,7 @@ public class JsUserAgent extends Applet implements SipListener, WebLoggerOutput 
     
     public void busyHereClicked(final SipRequest sipRequest) {
         executorService.submit(new Runnable() {
-            @Override
+            // @Override
             public void run() {
                 userAgent.rejectCall(sipRequest);
 
@@ -206,7 +206,7 @@ public class JsUserAgent extends Applet implements SipListener, WebLoggerOutput 
     
     public void dtmf(final char digit) {
         executorService.submit(new Runnable() {
-            @Override
+            // @Override
             public void run() {
                 MediaManager mediaManager = userAgent.getMediaManager();
                 mediaManager.sendDtmf(digit);
@@ -216,10 +216,10 @@ public class JsUserAgent extends Applet implements SipListener, WebLoggerOutput 
 
     // server methods
 
-    @Override
+    // @Override
     public void registering(final SipRequest sipRequest) {
         executorService.submit(new Runnable() {
-            @Override
+            // @Override
             public void run() {
                 try {
                     JSObject window = JSObject.getWindow(JsUserAgent.this);
@@ -232,10 +232,10 @@ public class JsUserAgent extends Applet implements SipListener, WebLoggerOutput 
 
     }
 
-    @Override
+    // @Override
     public void registerSuccessful(final SipResponse sipResponse) {
         executorService.submit(new Runnable() {
-            @Override
+            // @Override
             public void run() {
                 try {
                     JSObject window = JSObject.getWindow(JsUserAgent.this);
@@ -248,11 +248,11 @@ public class JsUserAgent extends Applet implements SipListener, WebLoggerOutput 
 
     }
 
-    @Override
+    // @Override
     public void registerFailed(final SipResponse sipResponse) {
         executorService.submit(new Runnable() {
             
-            @Override
+            // @Override
             public void run() {
                 try {
                     JSObject window = JSObject.getWindow(JsUserAgent.this);
@@ -265,12 +265,12 @@ public class JsUserAgent extends Applet implements SipListener, WebLoggerOutput 
 
     }
 
-    @Override
+    // @Override
     public void incomingCall(final SipRequest sipRequest,
             final SipResponse provResponse) {
         executorService.submit(new Runnable() {
             
-            @Override
+            // @Override
             public void run() {
                 try {
                     JSObject window = JSObject.getWindow(JsUserAgent.this);
@@ -283,11 +283,11 @@ public class JsUserAgent extends Applet implements SipListener, WebLoggerOutput 
         });
     }
 
-    @Override
+    // @Override
     public void remoteHangup(final SipRequest sipRequest) {
         executorService.submit(new Runnable() {
             
-            @Override
+            // @Override
             public void run() {
                 try {
                     JSObject window = JSObject.getWindow(JsUserAgent.this);
@@ -300,11 +300,11 @@ public class JsUserAgent extends Applet implements SipListener, WebLoggerOutput 
 
     }
 
-    @Override
+    // @Override
     public void ringing(final SipResponse sipResponse) {
         executorService.submit(new Runnable() {
             
-            @Override
+            // @Override
             public void run() {
                 try {
                     JSObject window = JSObject.getWindow(JsUserAgent.this);
@@ -317,11 +317,11 @@ public class JsUserAgent extends Applet implements SipListener, WebLoggerOutput 
 
     }
 
-    @Override
+    // @Override
     public void calleePickup(final SipResponse sipResponse) {
         executorService.submit(new Runnable() {
             
-            @Override
+            // @Override
             public void run() {
                 try {
                     JSObject window = JSObject.getWindow(JsUserAgent.this);
@@ -334,11 +334,11 @@ public class JsUserAgent extends Applet implements SipListener, WebLoggerOutput 
 
     }
 
-    @Override
+    // @Override
     public void error(final SipResponse sipResponse) {
         executorService.submit(new Runnable() {
             
-            @Override
+            // @Override
             public void run() {
                 try {
                     JSObject window = JSObject.getWindow(JsUserAgent.this);
@@ -353,11 +353,11 @@ public class JsUserAgent extends Applet implements SipListener, WebLoggerOutput 
 
     // WebLoggerOutput methods
     
-    @Override
+    // @Override
     public void javaLog(final String message) {
         executorService.submit(new Runnable() {
             
-            @Override
+            // @Override
             public void run() {
                 try {
                     JSObject window = JSObject.getWindow(JsUserAgent.this);
@@ -371,11 +371,11 @@ public class JsUserAgent extends Applet implements SipListener, WebLoggerOutput 
 
     }
 
-    @Override
+    // @Override
     public void javaNetworkLog(final String message) {
         executorService.submit(new Runnable() {
             
-            @Override
+            // @Override
             public void run() {
                 try {
                     JSObject window = JSObject.getWindow(JsUserAgent.this);
@@ -394,7 +394,7 @@ public class JsUserAgent extends Applet implements SipListener, WebLoggerOutput 
     public void setInviteSipRequest(final SipRequest sipRequest) {
         executorService.submit(new Runnable() {
             
-            @Override
+            // @Override
             public void run() {
                 try {
                     JSObject window = JSObject.getWindow(JsUserAgent.this);

@@ -194,38 +194,38 @@ public class MainFrame implements WindowListener, ActionListener {
 
     // window events
 
-    @Override
+    // @Override
     public void windowActivated(WindowEvent e) {
     }
 
-    @Override
+    // @Override
     public void windowClosed(WindowEvent e) {
         eventManager.windowClosed();
     }
 
-    @Override
+    // @Override
     public void windowClosing(WindowEvent e) {
     }
 
-    @Override
+    // @Override
     public void windowDeactivated(WindowEvent e) {
     }
 
-    @Override
+    // @Override
     public void windowDeiconified(WindowEvent e) {
     }
 
-    @Override
+    // @Override
     public void windowIconified(WindowEvent e) {
     }
 
-    @Override
+    // @Override
     public void windowOpened(WindowEvent e) {
     }
 
     // action event
 
-    @Override
+    // @Override
     public void actionPerformed(ActionEvent e) {
         eventManager.callClicked(uri.getText());
     }

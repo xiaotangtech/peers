@@ -58,7 +58,8 @@ public class MessageSenderTestNG {
         config.setLocalInetAddress(InetAddress.getLocalHost());
         SipServerTransportUser sipServerTransportUser =
             new SipServerTransportUser() {
-            @Override public void messageReceived(SipMessage sipMessage) {}
+            // @Override 
+            public void messageReceived(SipMessage sipMessage) {}
         };
         Logger logger = new FileLogger(null);
         transportManager = new TransportManager(

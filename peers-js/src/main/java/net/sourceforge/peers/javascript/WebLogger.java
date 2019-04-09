@@ -38,25 +38,25 @@ public class WebLogger implements Logger {
         networkFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS");
     }
 
-    @Override
+    // @Override
     public synchronized void debug(String message) {
         System.out.println(genericLog(message.toString(), "DEBUG"));
         out.javaLog(genericLog(message.toString(), "DEBUG"));
     }
 
-    @Override
+    // @Override
     public synchronized void info(String message) {
         System.out.println(genericLog(message.toString(), "INFO"));
         out.javaLog(genericLog(message.toString(), "INFO"));
     }
 
-    @Override
+    // @Override
     public synchronized void error(String message) {
         System.err.println(genericLog(message.toString(), "ERROR"));
         out.javaLog(genericLog(message.toString(), "ERROR"));
     }
 
-    @Override
+    // @Override
     public synchronized void error(String message, Exception exception) {
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
@@ -68,7 +68,7 @@ public class WebLogger implements Logger {
         out.javaLog(stringWriter.toString());
     }
 
-    @Override
+    // @Override
     public synchronized void traceNetwork(String message, String direction) {
         StringBuffer buf = new StringBuffer();
         buf.append(networkFormatter.format(new Date()));

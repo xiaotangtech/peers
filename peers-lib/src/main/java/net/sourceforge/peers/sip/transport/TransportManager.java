@@ -309,7 +309,7 @@ public class TransportManager {
                 datagramSocket = AccessController.doPrivileged(
                     new PrivilegedAction<DatagramSocket>() {
 
-                        @Override
+                        // @Override
                         public DatagramSocket run() {
                             try {
                                 return new DatagramSocket(conn.getLocalPort(),
@@ -382,7 +382,7 @@ public class TransportManager {
                 datagramSocket = AccessController.doPrivileged(
                         new PrivilegedAction<DatagramSocket>() {
 
-                            @Override
+                            // @Override
                             public DatagramSocket run() {
                                 try {
                                     return new DatagramSocket(conn.getLocalPort(),
@@ -447,7 +447,7 @@ public class TransportManager {
         // AccessController.doPrivileged added for plugin compatibility
         AccessController.doPrivileged(
             new PrivilegedAction<Void>() {
-                @Override
+                // @Override
                 public Void run() {
                     for (DatagramSocket datagramSocket: datagramSockets.values()) {
                         datagramSocket.close();

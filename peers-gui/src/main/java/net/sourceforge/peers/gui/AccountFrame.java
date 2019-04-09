@@ -267,7 +267,7 @@ public class AccountFrame extends javax.swing.JFrame {
                 unregistering = true;
             }
             runnable = new Runnable() {
-                @Override
+                // @Override
                 public void run() {
                     try {
                         userAgent.unregister();
@@ -278,7 +278,7 @@ public class AccountFrame extends javax.swing.JFrame {
             };
         } else {
             runnable = new Runnable() {
-                @Override
+                // @Override
                 public void run() {
                     userAgent.close();
                     applyNewConfig();

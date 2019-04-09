@@ -69,7 +69,7 @@ public class UdpMessageSender extends MessageSender {
         AccessController.doPrivileged(
             new PrivilegedAction<Void>() {
 
-                @Override
+                // @Override
                 public Void run() {
                     try {
                         logger.debug(datagramSocket.getLocalAddress().toString());

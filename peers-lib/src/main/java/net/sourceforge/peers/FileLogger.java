@@ -63,7 +63,7 @@ public class FileLogger implements Logger {
         networkFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS");
     }
 
-    @Override
+    // @Override
     public final void debug(String message) {
         synchronized (logMutex) {
             logWriter.write(genericLog(message.toString(), "DEBUG"));
@@ -71,7 +71,7 @@ public class FileLogger implements Logger {
         }
     }
 
-    @Override
+    // @Override
     public final void info(String message) {
         synchronized (logMutex) {
             logWriter.write(genericLog(message.toString(), "INFO "));
@@ -79,7 +79,7 @@ public class FileLogger implements Logger {
         }
     }
 
-    @Override
+    // @Override
     public final void error(String message) {
         synchronized (logMutex) {
             logWriter.write(genericLog(message.toString(), "ERROR"));
@@ -87,7 +87,7 @@ public class FileLogger implements Logger {
         }
     }
 
-    @Override
+    // @Override
     public final void error(String message, Exception exception) {
         synchronized (logMutex) {
             logWriter.write(genericLog(message, "ERROR"));
@@ -109,7 +109,7 @@ public class FileLogger implements Logger {
         return buf.toString();
     }
 
-    @Override
+    // @Override
     public final void traceNetwork(String message, String direction) {
         synchronized (networkMutex) {
             StringBuffer buf = new StringBuffer();

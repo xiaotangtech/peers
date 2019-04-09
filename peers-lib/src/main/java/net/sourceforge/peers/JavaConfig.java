@@ -39,57 +39,57 @@ public class JavaConfig implements Config {
     private int rtpPort;
     private String authorizationUsername;
 
-    @Override
+    // @Override
     public void save() {
         throw new RuntimeException("not implemented");
     }
 
-    @Override
+    // @Override
     public InetAddress getLocalInetAddress() {
         return localInetAddress;
     }
 
-    @Override
+    // @Override
     public InetAddress getPublicInetAddress() {
         return publicInetAddress;
     }
 
-    @Override
+    // @Override
     public String getUserPart() {
         return userPart;
     }
 
-    @Override
+    // @Override
     public String getDomain() {
         return domain;
     }
 
-    @Override
+    // @Override
     public String getPassword() {
         return password;
     }
 
-    @Override
+    // @Override
     public SipURI getOutboundProxy() {
         return outboundProxy;
     }
 
-    @Override
+    // @Override
     public int getSipPort() {
         return sipPort;
     }
 
-    @Override
+    // @Override
     public MediaMode getMediaMode() {
         return mediaMode;
     }
 
-    @Override
+    // @Override
     public boolean isMediaDebug() {
         return mediaDebug;
     }
 
-    @Override
+    // @Override
     public int getRtpPort() {
         return rtpPort;
     }
@@ -98,52 +98,52 @@ public class JavaConfig implements Config {
         return authorizationUsername;
     }
 
-    @Override
+    // @Override
     public void setLocalInetAddress(InetAddress inetAddress) {
         localInetAddress = inetAddress;
     }
 
-    @Override
+    // @Override
     public void setPublicInetAddress(InetAddress inetAddress) {
         publicInetAddress = inetAddress;
     }
 
-    @Override
+    // @Override
     public void setUserPart(String userPart) {
         this.userPart = userPart;
     }
 
-    @Override
+    // @Override
     public void setDomain(String domain) {
         this.domain = domain;
     }
 
-    @Override
+    // @Override
     public void setPassword(String password) {
         this.password = password;
     }
 
-    @Override
+    // @Override
     public void setOutboundProxy(SipURI outboundProxy) {
         this.outboundProxy = outboundProxy;
     }
 
-    @Override
+    // @Override
     public void setSipPort(int sipPort) {
         this.sipPort = sipPort;
     }
 
-    @Override
+    // @Override
     public void setMediaMode(MediaMode mediaMode) {
         this.mediaMode = mediaMode;
     }
 
-    @Override
+    // @Override
     public void setMediaDebug(boolean mediaDebug) {
         this.mediaDebug = mediaDebug;
     }
 
-    @Override
+    // @Override
     public void setRtpPort(int rtpPort) {
         this.rtpPort = rtpPort;
     }
@@ -152,12 +152,12 @@ public class JavaConfig implements Config {
         this.authorizationUsername = authorizationUsername;
     }
 
-    @Override
+    // @Override
     public String getMediaFile() {
         return mediaFile;
     }
 
-    @Override
+    // @Override
     public void setMediaFile(String mediaFile) {
         this.mediaFile = mediaFile;
     }

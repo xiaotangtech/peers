@@ -110,6 +110,7 @@ public class RtpSession {
             return;
         }
         byte[] buf = rtpParser.encode(rtpPacket);
+        logger.info("rtp send " + buf.length);
         final DatagramPacket datagramPacket =
                 new DatagramPacket(buf, buf.length,
                 remoteAddress, remotePort);
@@ -119,7 +120,7 @@ public class RtpSession {
             AccessController.doPrivileged(
                 new PrivilegedAction<Void>() {
 
-                    @Override
+                    // @Override
                     public Void run() {
                         try {
                             datagramSocket.send(datagramPacket);
@@ -163,7 +164,7 @@ public class RtpSession {
         // AccessController.doPrivileged added for plugin compatibility
         AccessController.doPrivileged(
             new PrivilegedAction<Void>() {
-                @Override
+                // @Override
                 public Void run() {
                     datagramSocket.close();
                     return null;
@@ -175,7 +176,7 @@ public class RtpSession {
 
     class Receiver implements Runnable {
 
-        @Override
+        // @Override
         public void run() {
             int receiveBufferSize;
             try {
@@ -233,6 +234,7 @@ public class RtpSession {
             int offset = datagramPacket.getOffset();
             int length = datagramPacket.getLength();
             byte[] trimmedData = new byte[length];
+            logger.info("rtp received " + length);
             System.arraycopy(data, offset, trimmedData, 0, length);
             if (mediaDebug) {
                 try {

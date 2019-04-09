@@ -212,7 +212,7 @@ public class XmlConfig implements Config {
         return null;
     }
 
-    @Override
+    // @Override
     public void save() {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer;
@@ -240,91 +240,91 @@ public class XmlConfig implements Config {
         logger.debug("config file saved");
     }
 
-    @Override
+    // @Override
     public InetAddress getLocalInetAddress() {
         return localInetAddress;
     }
 
-    @Override
+    // @Override
     public InetAddress getPublicInetAddress() {
         return publicInetAddress;
     }
 
-    @Override
+    // @Override
     public String getUserPart() {
         return userPart;
     }
 
-    @Override
+    // @Override
     public String getDomain() {
         return domain;
     }
 
-    @Override
+    // @Override
     public String getPassword() {
         return password;
     }
 
-    @Override
+    // @Override
     public SipURI getOutboundProxy() {
         return outboundProxy;
     }
 
-    @Override
+    // @Override
     public int getSipPort() {
         return sipPort;
     }
 
-    @Override
+    // @Override
     public MediaMode getMediaMode() {
         return mediaMode;
     }
 
-    @Override
+    // @Override
     public boolean isMediaDebug() {
         return mediaDebug;
     }
 
-    @Override
+    // @Override
     public int getRtpPort() {
         return rtpPort;
     }
 
-    @Override
+    // @Override
     public String getAuthorizationUsername() {
         return authorizationUsername;
     }
 
-    @Override
+    // @Override
     public void setLocalInetAddress(InetAddress inetAddress) {
         this.localInetAddress = inetAddress;
         ipAddressNode.setTextContent(inetAddress.getHostAddress());
     }
 
-    @Override
+    // @Override
     public void setPublicInetAddress(InetAddress inetAddress) {
         this.publicInetAddress = inetAddress;
     }
 
-    @Override
+    // @Override
     public void setUserPart(String userPart) {
         this.userPart = userPart;
         userPartNode.setTextContent(userPart);
     }
 
-    @Override
+    // @Override
     public void setDomain(String domain) {
         this.domain = domain;
         domainNode.setTextContent(domain);
     }
 
-    @Override
+    // @Override
     public void setPassword(String password) {
         this.password = password;
         passwordNode.setTextContent(password);
     }
 
-    @Override
+    // @Override
     public void setOutboundProxy(SipURI outboundProxy) {
         this.outboundProxy = outboundProxy;
         if (outboundProxy == null) {
@@ -335,42 +335,42 @@ public class XmlConfig implements Config {
         
     }
 
-    @Override
+    // @Override
     public void setSipPort(int sipPort) {
         this.sipPort = sipPort;
         sipPortNode.setTextContent(Integer.toString(sipPort));
     }
 
-    @Override
+    // @Override
     public void setMediaMode(MediaMode mediaMode) {
         this.mediaMode = mediaMode;
         mediaModeNode.setTextContent(mediaMode.toString());
     }
 
-    @Override
+    // @Override
     public void setMediaDebug(boolean mediaDebug) {
         this.mediaDebug = mediaDebug;
         mediaDebugNode.setTextContent(Boolean.toString(mediaDebug));
     }
 
-    @Override
+    // @Override
     public void setRtpPort(int rtpPort) {
         this.rtpPort = rtpPort;
         rtpPortNode.setTextContent(Integer.toString(rtpPort));
     }
 
-    @Override
+    // @Override
     public void setAuthorizationUsername(String authorizationUsername) {
         this.authorizationUsername = authorizationUsername;
         authUserNode.setTextContent(authorizationUsername);
     }
 
-    @Override
+    // @Override
     public String getMediaFile() {
         return mediaFile;
     }
 
-    @Override
+    // @Override
     public void setMediaFile(String mediaFile) {
         this.mediaFile = mediaFile;
     }

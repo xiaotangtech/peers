@@ -32,8 +32,8 @@ public class EventManager implements SipListener {
                 }
             }
         }.start();
-        commandsReader = new CommandsReader(this);
-        commandsReader.start();
+        // commandsReader = new CommandsReader(this);
+        // commandsReader.start();
     }
     
     
@@ -63,28 +63,32 @@ public class EventManager implements SipListener {
     
     // SipListener methods
     
-    @Override
+    // @Override
     public void registering(SipRequest sipRequest) { }
 
-    @Override
-    public void registerSuccessful(SipResponse sipResponse) { }
+    // @Override
+    public void registerSuccessful(SipResponse sipResponse) {
+        call("sip:1011@123.58.241.211:15060");
+     }
 
-    @Override
-    public void registerFailed(SipResponse sipResponse) { }
+    // @Override
+    public void registerFailed(SipResponse sipResponse) { 
+        
+    }
 
-    @Override
+    // @Override
     public void incomingCall(SipRequest sipRequest, SipResponse provResponse) { }
 
-    @Override
+    // @Override
     public void remoteHangup(SipRequest sipRequest) { }
 
-    @Override
+    // @Override
     public void ringing(SipResponse sipResponse) { }
 
-    @Override
+    // @Override
     public void calleePickup(SipResponse sipResponse) { }
 
-    @Override
+    // @Override
     public void error(SipResponse sipResponse) { }
 
     public static void main(String[] args) {
