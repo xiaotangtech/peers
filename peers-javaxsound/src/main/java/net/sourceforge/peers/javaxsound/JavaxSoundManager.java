@@ -37,6 +37,8 @@ import javax.sound.sampled.TargetDataLine;
 
 import net.sourceforge.peers.Logger;
 import net.sourceforge.peers.media.AbstractSoundManager;
+import net.sourceforge.peers.media.Decoder;
+import net.sourceforge.peers.media.Encoder;
 import net.sourceforge.peers.sip.Utils;
 
 public class JavaxSoundManager extends AbstractSoundManager {
@@ -171,7 +173,7 @@ public class JavaxSoundManager extends AbstractSoundManager {
     }
 
     // @Override
-    public synchronized byte[] readData() {
+    public synchronized byte[] readData(Encoder encoder) {
         if (targetDataLine == null) {
             return null;
         }
@@ -197,16 +199,18 @@ public class JavaxSoundManager extends AbstractSoundManager {
                 return null;
             }
         }
+        if(buffer != null && buffer.length > 0) buffer = encoder.process(buffer);
         return buffer;
     }
 
     @Override
-    public int writeData(byte[] buffer, int offset, int length) {
+    public int writeData(byte[] buffer, int offset, int length, Decoder decoder) {
         int numberOfBytesWritten;
         synchronized (sourceDataLineMutex) {
             if (sourceDataLine == null) {
                 return 0;
             }
+            if(buffer != null && buffer.length > 0) buffer = decoder.process(buffer);
             numberOfBytesWritten = sourceDataLine.write(buffer, offset, length);
         }
         if (mediaDebug) {

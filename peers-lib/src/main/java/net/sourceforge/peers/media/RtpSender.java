@@ -159,12 +159,17 @@ public class RtpSender implements Runnable {
             sleepTime = 19500000 - (System.nanoTime() - lastSentTime) + offset;
             if (sleepTime > 0) {
                 logger.info("sleeptime " + sleepTime);
-                // try {
-                //     Thread.sleep(Math.round(sleepTime / 1000000f));
-                // } catch (InterruptedException e) {
-                //     logger.error("Thread interrupted", e);
-                //     return;
-                // }
+                try {
+                    logger.info("sleep " + Math.round(sleepTime / 1000000f));
+                    // if(sleepTime < 10000000){
+                        Thread.sleep(Math.round(sleepTime / 1000000f));
+                    // }else{
+                    //     Thread.sleep(10);
+                    // }
+                } catch (InterruptedException e) {
+                    logger.error("Thread interrupted", e);
+                    return;
+                }
                 rtpSession.send(rtpPacket);
                 lastSentTime = System.nanoTime();
                 offset = 0;

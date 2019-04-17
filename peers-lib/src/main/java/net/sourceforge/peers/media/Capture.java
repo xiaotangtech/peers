@@ -36,13 +36,15 @@ public class Capture implements Runnable {
     private SoundSource soundSource;
     private Logger logger;
     private CountDownLatch latch;
+    private Encoder encoder;
     
     public Capture(PipedOutputStream rawData, SoundSource soundSource,
-            Logger logger, CountDownLatch latch) {
+            Logger logger, CountDownLatch latch, Encoder encoder) {
         this.rawData = rawData;
         this.soundSource = soundSource;
         this.logger = logger;
         this.latch = latch;
+        this.encoder = encoder;
         isStopped = false;
     }
 
@@ -50,7 +52,7 @@ public class Capture implements Runnable {
         byte[] buffer;
         
         while (!isStopped) {
-            buffer = soundSource.readData();
+            buffer = soundSource.readData(encoder);
             try {
                 if (buffer == null) {
                     break;

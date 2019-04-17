@@ -104,6 +104,7 @@ public abstract class Encoder implements Runnable {
             }
             
             byte[] ulawData = process(buffer);
+            // byte[] ulawData = buffer;
             if (mediaDebug) {
                 try {
                     encoderOutput.write(ulawData);

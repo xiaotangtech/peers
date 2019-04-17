@@ -24,5 +24,5 @@ public abstract class AbstractSoundManager implements SoundSource {
 
     public abstract void init();
     public abstract void close();
-    public abstract int writeData(byte[] buffer, int offset, int length);
+    public abstract int writeData(byte[] buffer, int offset, int length, Decoder decoder);
 }

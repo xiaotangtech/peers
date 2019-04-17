@@ -61,9 +61,10 @@ public class MediaManager {
             return;
         }
         
-        rtpSession = new RtpSession(inetAddress, datagramSocket,
-                userAgent.isMediaDebug(), logger, userAgent.getPeersHome());
-        
+        if(rtpSession == null){
+            rtpSession = new RtpSession(inetAddress, datagramSocket,
+                    userAgent.isMediaDebug(), logger, userAgent.getPeersHome());
+        }
         try {
             inetAddress = InetAddress.getByName(remoteAddress);
             rtpSession.setRemoteAddress(inetAddress);
@@ -72,20 +73,22 @@ public class MediaManager {
         }
         rtpSession.setRemotePort(remotePort);
         
-        
-        try {
-            captureRtpSender = new CaptureRtpSender(rtpSession,
-                    soundSource, userAgent.isMediaDebug(), codec, logger,
-                    userAgent.getPeersHome());
-        } catch (IOException e) {
-            logger.error("input/output error", e);
-            return;
-        }
+        if(captureRtpSender == null){
 
-        try {
-            captureRtpSender.start();
-        } catch (IOException e) {
-            logger.error("input/output error", e);
+            try {
+                captureRtpSender = new CaptureRtpSender(rtpSession,
+                        soundSource, userAgent.isMediaDebug(), codec, logger,
+                        userAgent.getPeersHome());
+            } catch (IOException e) {
+                logger.error("input/output error", e);
+                return;
+            }
+    
+            try {
+                captureRtpSender.start();
+            } catch (IOException e) {
+                logger.error("input/output error", e);
+            }
         }
     }
 
