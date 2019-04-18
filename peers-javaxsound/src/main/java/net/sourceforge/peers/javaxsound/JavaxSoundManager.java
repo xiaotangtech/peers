@@ -206,11 +206,11 @@ public class JavaxSoundManager extends AbstractSoundManager {
     @Override
     public int writeData(byte[] buffer, int offset, int length, Decoder decoder) {
         int numberOfBytesWritten;
+        if(buffer != null && buffer.length > 0) buffer = decoder.process(buffer);
         synchronized (sourceDataLineMutex) {
             if (sourceDataLine == null) {
                 return 0;
             }
-            if(buffer != null && buffer.length > 0) buffer = decoder.process(buffer);
             numberOfBytesWritten = sourceDataLine.write(buffer, offset, length);
         }
         if (mediaDebug) {
