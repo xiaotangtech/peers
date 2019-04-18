@@ -72,7 +72,7 @@ public class FileReader implements SoundSource {
     }
 
     // @Override
-    public synchronized byte[] readData(Encoder encoder) {
+    public synchronized byte[] readData() {
         if (fileInputStream == null) {
             return null;
         }
@@ -80,7 +80,6 @@ public class FileReader implements SoundSource {
         try {
             if (fileInputStream.read(buffer) >= 0) {
                 Thread.sleep(15);
-                if(buffer != null && buffer.length > 0) buffer = encoder.process(buffer);
                 return buffer;
             } else {
                 fileInputStream.close();

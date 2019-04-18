@@ -52,12 +52,12 @@ public class Capture implements Runnable {
         byte[] buffer;
         
         while (!isStopped) {
-            buffer = soundSource.readData(encoder);
+            buffer = soundSource.readData();
             try {
                 if (buffer == null) {
                     break;
                 }
-                rawData.write(buffer);
+                rawData.write(encoder.process(buffer));
                 rawData.flush();
             } catch (IOException e) {
                 logger.error("input/output error", e);

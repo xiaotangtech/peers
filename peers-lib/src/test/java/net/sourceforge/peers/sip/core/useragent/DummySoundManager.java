@@ -19,13 +19,11 @@
 package net.sourceforge.peers.sip.core.useragent;
 
 import net.sourceforge.peers.media.AbstractSoundManager;
-import net.sourceforge.peers.media.Decoder;
-import net.sourceforge.peers.media.Encoder;
 
 public class DummySoundManager extends AbstractSoundManager {
 
     // @Override
-    public byte[] readData(Encoder encoder) {
+    public byte[] readData() {
         return null;
     }
 
@@ -38,7 +36,7 @@ public class DummySoundManager extends AbstractSoundManager {
     }
 
     @Override
-    public int writeData(byte[] buffer, int offset, int length, Decoder decoder) {
+    public int writeData(byte[] buffer, int offset, int length) {
         return 0;
     }
 

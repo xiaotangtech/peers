@@ -173,7 +173,7 @@ public class JavaxSoundManager extends AbstractSoundManager {
     }
 
     // @Override
-    public synchronized byte[] readData(Encoder encoder) {
+    public synchronized byte[] readData() {
         if (targetDataLine == null) {
             return null;
         }
@@ -199,14 +199,16 @@ public class JavaxSoundManager extends AbstractSoundManager {
                 return null;
             }
         }
-        if(buffer != null && buffer.length > 0) buffer = encoder.process(buffer);
+        // encoder.process(buffer);
+        // if(buffer != null && buffer.length > 0) buffer = encoder.process(buffer);
         return buffer;
     }
 
     @Override
-    public int writeData(byte[] buffer, int offset, int length, Decoder decoder) {
+    public int writeData(byte[] buffer, int offset, int length) {
         int numberOfBytesWritten;
-        if(buffer != null && buffer.length > 0) buffer = decoder.process(buffer);
+        // decoder.process(buffer);
+        // if(buffer != null && buffer.length > 0) buffer = decoder.process(buffer);
         synchronized (sourceDataLineMutex) {
             if (sourceDataLine == null) {
                 return 0;
