@@ -36,7 +36,7 @@ public class DummySoundManager extends AbstractSoundManager {
     }
 
     @Override
-    public int writeData(byte[] buffer, int offset, int length) {
+    public int writeData(byte[] buffer, int offset, int length, byte[] source) {
         return 0;
     }
 
