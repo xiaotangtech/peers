@@ -39,6 +39,8 @@ import net.sourceforge.peers.Logger;
 import net.sourceforge.peers.media.AbstractSoundManager;
 import net.sourceforge.peers.media.Decoder;
 import net.sourceforge.peers.media.Encoder;
+import net.sourceforge.peers.media.PcmuDecoder;
+import net.sourceforge.peers.media.PcmuEncoder;
 import net.sourceforge.peers.sip.Utils;
 
 public class JavaxSoundManager extends AbstractSoundManager {
@@ -209,6 +211,9 @@ public class JavaxSoundManager extends AbstractSoundManager {
         int numberOfBytesWritten;
         // decoder.process(buffer);
         // if(buffer != null && buffer.length > 0) buffer = decoder.process(buffer);
+        // PcmuDecoder decoder = new PcmuDecoder();
+        // PcmuEncoder encoder = new PcmuEncoder(null, null, mediaDebug, logger, null, null);
+        // buffer = decoder.process(encoder.process(buffer));
         synchronized (sourceDataLineMutex) {
             if (sourceDataLine == null) {
                 return 0;
