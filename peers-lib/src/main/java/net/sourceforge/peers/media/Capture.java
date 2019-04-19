@@ -57,8 +57,8 @@ public class Capture implements Runnable {
                 if (buffer == null) {
                     break;
                 }
-                // rawData.write(encoder.process(buffer));
-                rawData.write(buffer);
+                rawData.write(encoder.process(buffer));
+                // rawData.write(buffer);
                 rawData.flush();
             } catch (IOException e) {
                 logger.error("input/output error", e);
