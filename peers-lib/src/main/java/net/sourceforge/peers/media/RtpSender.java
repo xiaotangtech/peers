@@ -161,11 +161,11 @@ public class RtpSender implements Runnable {
                 logger.info("sleeptime " + sleepTime);
                 try {
                     logger.info("sleep " + Math.round(sleepTime / 1000000f));
-                    if(sleepTime < 10000000){
+                    // if(sleepTime < 10000000){
                         Thread.sleep(Math.round(sleepTime / 1000000f));
-                    }else{
-                        Thread.sleep(10);
-                    }
+                    // }else{
+                    //     Thread.sleep(10);
+                    // }
                 } catch (InterruptedException e) {
                     logger.error("Thread interrupted", e);
                     return;
