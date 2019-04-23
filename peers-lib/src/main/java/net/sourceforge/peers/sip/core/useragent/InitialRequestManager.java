@@ -132,6 +132,11 @@ public class InitialRequestManager extends RequestManager
                     userAgent.getConfig().getLocalInetAddress());
         }
         headers.add(callIdName, new SipHeaderFieldValue(localCallId));
+
+        if(callId != null){
+            SipHeaderFieldName callListIdName = new SipHeaderFieldName("X-DTai-CallListId");
+            headers.add(callListIdName, new SipHeaderFieldValue(callId));
+        }
         
         //CSeq
         
