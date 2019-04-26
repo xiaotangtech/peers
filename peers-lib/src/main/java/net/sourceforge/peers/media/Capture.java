@@ -56,6 +56,8 @@ public class Capture implements Runnable {
             try {
                 if (buffer == null) {
                     break;
+                }else if(buffer.length == 0){
+                    continue;
                 }
                 rawData.write(encoder.process(buffer));
                 // rawData.write(buffer);
