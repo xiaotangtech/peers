@@ -74,6 +74,8 @@ public class RtpSender implements Runnable {
                 + AbstractSoundManager.MEDIA_DIR + File.separator + date
                 + "_rtp_sender.input";
             try {
+                logger.info("out put file:");
+                logger.info(fileName);
                 rtpSenderInput = new FileOutputStream(fileName);
             } catch (FileNotFoundException e) {
                 logger.error("cannot create file", e);
