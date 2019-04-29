@@ -93,7 +93,7 @@ public class RtpSender implements Runnable {
         int sequenceNumber = random.nextInt();
         rtpPacket.setSequenceNumber(sequenceNumber);
         rtpPacket.setSsrc(random.nextInt());
-        int buf_size = Capture.BUFFER_SIZE / 2;
+        int buf_size = Capture.BUFFER_SIZE ;
         byte[] buffer = new byte[buf_size];
         int timestamp = 0;
         int numBytesRead;
