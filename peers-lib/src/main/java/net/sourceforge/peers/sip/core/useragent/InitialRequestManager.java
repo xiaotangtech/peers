@@ -135,7 +135,7 @@ public class InitialRequestManager extends RequestManager
 
         if(callId != null){
             SipHeaderFieldName callListIdName = new SipHeaderFieldName("X-DTai-CallListId");
-            // headers.add(callListIdName, new SipHeaderFieldValue(callId));
+            headers.add(callListIdName, new SipHeaderFieldValue(callId));
         }
         
         //CSeq
