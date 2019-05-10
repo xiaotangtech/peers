@@ -173,11 +173,11 @@ public class InitialRequestManager extends RequestManager
         }
         ClientTransaction clientTransaction = null;
         if (RFC3261.METHOD_INVITE.equals(method)) {
-            //add customer header
-            if(callId != null){
-                SipHeaderFieldName callListIdName = new SipHeaderFieldName("X-DTai-CallListId");
-                sipRequest.getSipHeaders().add(callListIdName, new SipHeaderFieldValue(callId));
-            }
+            //add customer header.  moved to invite handler
+            // if(callId != null){
+            //     SipHeaderFieldName callListIdName = new SipHeaderFieldName("X-DTai-CallListId");
+            //     sipRequest.getSipHeaders().add(callListIdName, new SipHeaderFieldValue(callId));
+            // }
             clientTransaction = inviteHandler.preProcessInvite(sipRequest);
         } else if (RFC3261.METHOD_REGISTER.equals(method)) {
             clientTransaction = registerHandler.preProcessRegister(sipRequest);

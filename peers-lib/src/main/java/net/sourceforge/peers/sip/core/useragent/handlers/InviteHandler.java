@@ -390,6 +390,9 @@ public class InviteHandler extends DialogMethodHandler
         }
         requestHeaders.add(new SipHeaderFieldName(RFC3261.HDR_CONTENT_TYPE),
                 new SipHeaderFieldValue(RFC3261.CONTENT_TYPE_SDP));
+        //add custom header
+        userAgent.getConfig().getCustomSipHeaders()
+        .forEach((k,v) -> requestHeaders.add(new SipHeaderFieldName(k), new SipHeaderFieldValue(v)));
         return clientTransaction;
     }
     

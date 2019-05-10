@@ -20,6 +20,8 @@
 package net.sourceforge.peers;
 
 import java.net.InetAddress;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.sourceforge.peers.media.MediaMode;
 import net.sourceforge.peers.sip.syntaxencoding.SipURI;
@@ -51,5 +53,12 @@ public interface Config {
     public void setMediaFile(String mediaFile);
     public void setRtpPort(int rtpPort);
     public void setAuthorizationUsername(String authorizationUsername);
+
+    default void setCustomSipHeaders(Map<String,String> sipHeaders){
+
+    }
+    default Map<String,String> getCustomSipHeaders(){
+        return new HashMap<>();
+    }
 
 }
