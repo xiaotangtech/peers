@@ -58,7 +58,7 @@ public interface Config {
 
     }
     default Map<String,String> getCustomSipHeaders(){
-        return new HashMap<>();
+        return null;
     }
 
 }
