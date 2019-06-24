@@ -61,10 +61,10 @@ public class MediaManager {
             return;
         }
         
-        // if(rtpSession == null){
+        if(rtpSession == null){
             rtpSession = new RtpSession(inetAddress, datagramSocket,
                     userAgent.isMediaDebug(), logger, userAgent.getPeersHome());
-        // }
+        }
         try {
             inetAddress = InetAddress.getByName(remoteAddress);
             rtpSession.setRemoteAddress(inetAddress);
