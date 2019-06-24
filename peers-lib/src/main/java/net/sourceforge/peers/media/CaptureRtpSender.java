@@ -48,8 +48,8 @@ public class CaptureRtpSender {
         // the use of PipedInputStream and PipedOutputStream in Capture,
         // Encoder and RtpSender imposes a synchronization point at the
         // end of life of those threads to a void read end dead exceptions
-        // CountDownLatch latch = new CountDownLatch(3);
-        CountDownLatch latch = new CountDownLatch(2);
+        CountDownLatch latch = new CountDownLatch(3);
+        // CountDownLatch latch = new CountDownLatch(2);
         PipedOutputStream rawDataOutput = new PipedOutputStream();
         PipedInputStream rawDataInput;
         try {
@@ -69,6 +69,7 @@ public class CaptureRtpSender {
             rawDataInput.close();
             return;
         }
+        capture = new Capture(rawDataOutput, soundSource, logger, latch, encoder);
         switch (codec.getPayloadType()) {
         case RFC3551.PAYLOAD_TYPE_PCMU:
             encoder = new PcmuEncoder(rawDataInput, encodedDataOutput,
@@ -83,7 +84,7 @@ public class CaptureRtpSender {
             rawDataInput.close();
             throw new RuntimeException("unknown payload type");
         }
-        capture = new Capture(rawDataOutput, soundSource, logger, latch, encoder);
+        // capture = new Capture(rawDataOutput, soundSource, logger, latch, encoder);
         rtpSender = new RtpSender(rawDataInput, rtpSession, mediaDebug,
                 codec, logger, peersHome, latch);
     }
@@ -91,18 +92,18 @@ public class CaptureRtpSender {
     public void start() throws IOException {
         
         capture.setStopped(false);
-        // encoder.setStopped(false);
+        encoder.setStopped(false);
         rtpSender.setStopped(false);
         
         Thread captureThread = new Thread(capture,
                 Capture.class.getSimpleName());
-        // Thread encoderThread = new Thread(encoder,
-        //         Encoder.class.getSimpleName());
+        Thread encoderThread = new Thread(encoder,
+                Encoder.class.getSimpleName());
         Thread rtpSenderThread = new Thread(rtpSender,
                 RtpSender.class.getSimpleName());
         
         captureThread.start();
-        // encoderThread.start();
+        encoderThread.start();
         rtpSenderThread.start();
         
     }
@@ -111,9 +112,9 @@ public class CaptureRtpSender {
         if (capture != null) {
             capture.setStopped(true);
         }
-        // if (encoder != null) {
-        //     encoder.setStopped(true);
-        // }
+        if (encoder != null) {
+            encoder.setStopped(true);
+        }
         if (rtpSender != null) {
             rtpSender.setStopped(true);
         }
