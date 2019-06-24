@@ -69,7 +69,6 @@ public class CaptureRtpSender {
             rawDataInput.close();
             return;
         }
-        capture = new Capture(rawDataOutput, soundSource, logger, latch, encoder);
         switch (codec.getPayloadType()) {
         case RFC3551.PAYLOAD_TYPE_PCMU:
             encoder = new PcmuEncoder(rawDataInput, encodedDataOutput,
@@ -84,7 +83,7 @@ public class CaptureRtpSender {
             rawDataInput.close();
             throw new RuntimeException("unknown payload type");
         }
-        // capture = new Capture(rawDataOutput, soundSource, logger, latch, encoder);
+        capture = new Capture(rawDataOutput, soundSource, logger, latch, encoder);
         rtpSender = new RtpSender(rawDataInput, rtpSession, mediaDebug,
                 codec, logger, peersHome, latch);
     }
@@ -92,18 +91,18 @@ public class CaptureRtpSender {
     public void start() throws IOException {
         
         capture.setStopped(false);
-        encoder.setStopped(false);
+        // encoder.setStopped(false);
         rtpSender.setStopped(false);
         
         Thread captureThread = new Thread(capture,
                 Capture.class.getSimpleName());
-        Thread encoderThread = new Thread(encoder,
-                Encoder.class.getSimpleName());
+        // Thread encoderThread = new Thread(encoder,
+        //         Encoder.class.getSimpleName());
         Thread rtpSenderThread = new Thread(rtpSender,
                 RtpSender.class.getSimpleName());
         
         captureThread.start();
-        encoderThread.start();
+        // encoderThread.start();
         rtpSenderThread.start();
         
     }
