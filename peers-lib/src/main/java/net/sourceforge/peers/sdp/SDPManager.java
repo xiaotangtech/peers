@@ -57,6 +57,10 @@ public class SDPManager {
         codec.setName(RFC3551.PCMA);
         supportedCodecs.add(codec);
         codec = new Codec();
+        codec.setPayloadType(RFC3551.PAYLOAD_TYPE_G729);
+        codec.setName(RFC3551.G729);
+        supportedCodecs.add(codec);
+        codec = new Codec();
         codec.setPayloadType(RFC4733.PAYLOAD_TYPE_TELEPHONE_EVENT);
         codec.setName(RFC4733.TELEPHONE_EVENT);
         //TODO add fmtp:101 0-15 attribute

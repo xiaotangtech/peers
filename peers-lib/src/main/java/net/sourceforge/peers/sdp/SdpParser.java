@@ -160,6 +160,9 @@ public class SdpParser {
                     case RFC3551.PAYLOAD_TYPE_PCMA:
                         name = RFC3551.PCMA;
                         break;
+                    case RFC3551.PAYLOAD_TYPE_G729:
+                        name = RFC3551.G729;
+                        break;
                     default:
                         name = "unsupported";
                         break;

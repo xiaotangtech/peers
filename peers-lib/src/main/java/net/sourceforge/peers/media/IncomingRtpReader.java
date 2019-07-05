@@ -47,6 +47,9 @@ public class IncomingRtpReader implements RtpListener {
         case RFC3551.PAYLOAD_TYPE_PCMA:
             decoder = new PcmaDecoder();
             break;
+        case RFC3551.PAYLOAD_TYPE_G729:
+            decoder = new G729Decoder();
+            break;
         default:
             throw new RuntimeException("unsupported payload type");
         }

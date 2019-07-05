@@ -78,6 +78,10 @@ public class CaptureRtpSender {
             encoder = new PcmaEncoder(rawDataInput, encodedDataOutput,
                     mediaDebug, logger, peersHome, latch);
             break;
+        case RFC3551.PAYLOAD_TYPE_G729:
+            encoder = new G729Encoder(rawDataInput, encodedDataOutput,
+                    mediaDebug, logger, peersHome, latch);
+            break;
         default:
             encodedDataInput.close();
             rawDataInput.close();
