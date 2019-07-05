@@ -71,14 +71,17 @@ public class CaptureRtpSender {
         }
         switch (codec.getPayloadType()) {
         case RFC3551.PAYLOAD_TYPE_PCMU:
+            logger.info("xxxxxxxxxxxxxxxxxx:" + RFC3551.PCMU);
             encoder = new PcmuEncoder(rawDataInput, encodedDataOutput,
                     mediaDebug, logger, peersHome, latch);
             break;
         case RFC3551.PAYLOAD_TYPE_PCMA:
+            logger.info("xxxxxxxxxxxxxxxxxx:" + RFC3551.PCMA);
             encoder = new PcmaEncoder(rawDataInput, encodedDataOutput,
                     mediaDebug, logger, peersHome, latch);
             break;
         case RFC3551.PAYLOAD_TYPE_G729:
+            logger.info("xxxxxxxxxxxxxxxxxx:" + RFC3551.G729);
             encoder = new G729Encoder(rawDataInput, encodedDataOutput,
                     mediaDebug, logger, peersHome, latch);
             break;
