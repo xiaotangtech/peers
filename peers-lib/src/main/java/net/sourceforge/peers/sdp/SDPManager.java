@@ -48,7 +48,12 @@ public class SDPManager {
         supportedCodecs = new ArrayList<Codec>();
         random = new Random();
         //TODO retrieve codecs from configuration file
+
         Codec codec = new Codec();
+        codec.setPayloadType(RFC3551.PAYLOAD_TYPE_G729);
+        codec.setName(RFC3551.G729);
+        supportedCodecs.add(codec);
+        codec = new Codec();
         codec.setPayloadType(RFC3551.PAYLOAD_TYPE_PCMU);
         codec.setName(RFC3551.PCMU);
         supportedCodecs.add(codec);
@@ -56,10 +61,7 @@ public class SDPManager {
         codec.setPayloadType(RFC3551.PAYLOAD_TYPE_PCMA);
         codec.setName(RFC3551.PCMA);
         supportedCodecs.add(codec);
-        codec = new Codec();
-        codec.setPayloadType(RFC3551.PAYLOAD_TYPE_G729);
-        codec.setName(RFC3551.G729);
-        supportedCodecs.add(codec);
+
         codec = new Codec();
         codec.setPayloadType(RFC4733.PAYLOAD_TYPE_TELEPHONE_EVENT);
         codec.setName(RFC4733.TELEPHONE_EVENT);
