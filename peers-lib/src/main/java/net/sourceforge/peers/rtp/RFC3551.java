@@ -25,7 +25,7 @@ public class RFC3551 {
 
     public static final int PAYLOAD_TYPE_PCMU = 0;
     public static final int PAYLOAD_TYPE_PCMA = 8;
-    public static final int PAYLOAD_TYPE_G729 = 16;
+    public static final int PAYLOAD_TYPE_G729 = 18;
 
     // encoding names
 
