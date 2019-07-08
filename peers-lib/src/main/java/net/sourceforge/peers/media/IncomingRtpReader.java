@@ -42,7 +42,7 @@ public class IncomingRtpReader implements RtpListener {
         this.soundManager = soundManager;
         switch (codec.getPayloadType()) {
             case RFC3551.PAYLOAD_TYPE_G729:
-                logger.debug("===============init codec G&@(:"+codec.getPayloadType());
+                logger.debug("===============init codec :"+codec.getPayloadType());
                 decoder = new G729Decoder(logger);
                 break;
             case RFC3551.PAYLOAD_TYPE_PCMU:
