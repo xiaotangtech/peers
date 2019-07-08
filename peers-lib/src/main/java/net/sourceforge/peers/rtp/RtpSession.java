@@ -109,8 +109,9 @@ public class RtpSession {
         if (datagramSocket == null) {
             return;
         }
+        logger.debug("RTP===发送===编码前length====:"+rtpPacket.getData().length);
         byte[] buf = rtpParser.encode(rtpPacket);
-        logger.debug("RTP===发送编码后length====:"+buf.length);
+        logger.debug("RTP===发送===编码后length====:"+buf.length);
         logger.info("rtp send " + buf.length);
         final DatagramPacket datagramPacket =
                 new DatagramPacket(buf, buf.length,
