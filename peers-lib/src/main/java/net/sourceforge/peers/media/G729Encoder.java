@@ -1,6 +1,6 @@
 package net.sourceforge.peers.media;
 
-import net.sourceforge.peers.G729.codec.G729AEncoder;
+import net.sourceforge.peers.g729.codec.G729AEncoder;
 import net.sourceforge.peers.Logger;
 
 import java.io.PipedInputStream;

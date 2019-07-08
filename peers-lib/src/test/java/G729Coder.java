@@ -1,3 +1,6 @@
+import net.sourceforge.peers.g729.codec.G729ADecoder;
+import net.sourceforge.peers.g729.codec.G729AEncoder;
+
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -16,7 +19,7 @@ import java.util.Arrays;
 public class G729Coder {
 
     public static byte[] encodeByte(byte[] bytes) {
-        org.restcomm.media.codec.g729.Encoder encoder = new org.restcomm.media.codec.g729.Encoder();
+        G729AEncoder encoder = new G729AEncoder();
         byte[] bb = new byte[bytes.length / 16];
         ArrayList<Byte> list = new ArrayList<>();//没有解压的集合
         ArrayList<Byte> list2 = new ArrayList<>();//解压完的集合
@@ -40,7 +43,7 @@ public class G729Coder {
     }
 
     public static byte[] decodeByte(byte[] bytes) {
-        org.restcomm.media.codec.g729.Decoder decoder = new org.restcomm.media.codec.g729.Decoder();
+        G729ADecoder decoder = new G729ADecoder();
         byte[] bb = new byte[bytes.length * 16];
         ArrayList<Byte> list = new ArrayList<>();
         for (int i = 0; i < bytes.length / 10; i++) {
