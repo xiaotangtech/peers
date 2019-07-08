@@ -1,7 +1,9 @@
 package net.sourceforge.peers.g729.spi;
 
+
 import net.sourceforge.peers.g729.Component;
 import net.sourceforge.peers.g729.ComponentType;
+import net.sourceforge.peers.g729.scheduler.PriorityQueueScheduler;
 
 public interface Endpoint {
     String getLocalName();
@@ -25,6 +27,10 @@ public interface Endpoint {
     int getActiveConnectionsCount();
 
     void configure(boolean var1);
+
+    PriorityQueueScheduler getScheduler();
+
+    void setScheduler(PriorityQueueScheduler var1);
 
     Component getResource(MediaType var1, ComponentType var2);
 
