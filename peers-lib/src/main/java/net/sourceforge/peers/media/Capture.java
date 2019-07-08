@@ -57,6 +57,7 @@ public class Capture implements Runnable {
                 if (buffer == null) {
                     break;
                 }
+                logger.debug("PCMPCMPCMPCM======PCMPCMPCMPCM======::"+buffer.length);
                 rawData.write(encoder.process(buffer));
                 // rawData.write(buffer);
                 rawData.flush();
