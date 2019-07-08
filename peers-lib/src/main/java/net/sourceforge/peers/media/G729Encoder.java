@@ -15,9 +15,11 @@ import java.util.concurrent.CountDownLatch;
 public class G729Encoder extends Encoder{
 
 
+    private Logger logger;
 
     public G729Encoder(PipedInputStream rawData, PipedOutputStream encodedData, boolean mediaDebug, Logger logger, String peersHome, CountDownLatch latch) {
         super(rawData, encodedData, mediaDebug, logger, peersHome, latch);
+        this.logger=logger;
     }
 
     @Override
@@ -25,7 +27,8 @@ public class G729Encoder extends Encoder{
         return encodeByte(media);
     }
 
-    public static byte[] encodeByte(byte[] bytes) {
+    public byte[] encodeByte(byte[] bytes) {
+        logger.debug("+++++++++++++++++++G729Encoder before length:" + bytes.length);
         G729AEncoder encoder = new G729AEncoder();
         byte[] bb = new byte[bytes.length / 16];
         ArrayList<Byte> list = new ArrayList<>();//没有解压的集合
@@ -46,6 +49,7 @@ public class G729Encoder extends Encoder{
         for (int i = 0; i < list2.size(); i++) {
             bb[i] = list2.get(i);
         }
+        logger.debug("-------------------G729Encoder after length:" + bb.length);
         return bb;
     }
 }

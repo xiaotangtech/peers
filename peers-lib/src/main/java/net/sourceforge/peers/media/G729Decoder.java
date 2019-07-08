@@ -1,5 +1,6 @@
 package net.sourceforge.peers.media;
 
+import net.sourceforge.peers.Logger;
 import net.sourceforge.peers.g729.codec.G729ADecoder;
 
 import java.util.ArrayList;
@@ -9,13 +10,21 @@ import java.util.ArrayList;
  * 2019/6/27 5:24 PM
  */
 public class G729Decoder extends Decoder {
+
+    private Logger logger;
+
+    public G729Decoder(Logger logger) {
+        this.logger = logger;
+    }
+
     @Override
     public byte[] process(byte[] media) {
         return decodeByte(media);
     }
 
 
-    public static byte[] decodeByte(byte[] bytes) {
+    public byte[] decodeByte(byte[] bytes) {
+        logger.debug("-----------------G729Decoder before length:" + bytes.length);
         G729ADecoder decoder = new G729ADecoder();
         byte[] bb = new byte[bytes.length * 16];
         ArrayList<Byte> list = new ArrayList<>();
@@ -31,6 +40,7 @@ public class G729Decoder extends Decoder {
         for (int i = 0; i < list.size(); i++) {
             bb[i] = list.get(i);
         }
+        logger.debug("-----------------G729Decoder after length:" + bb.length);
         return bb;
     }
 }
