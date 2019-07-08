@@ -1,5 +1,6 @@
 package net.sourceforge.peers.media;
 
+import net.sourceforge.peers.G729.codec.G729AEncoder;
 import net.sourceforge.peers.Logger;
 
 import java.io.PipedInputStream;
@@ -25,7 +26,7 @@ public class G729Encoder extends Encoder{
     }
 
     public static byte[] encodeByte(byte[] bytes) {
-        org.restcomm.media.codec.g729.Encoder encoder = new org.restcomm.media.codec.g729.Encoder();
+        G729AEncoder encoder = new G729AEncoder();
         byte[] bb = new byte[bytes.length / 16];
         ArrayList<Byte> list = new ArrayList<>();//没有解压的集合
         ArrayList<Byte> list2 = new ArrayList<>();//解压完的集合

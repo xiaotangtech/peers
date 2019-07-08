@@ -1,5 +1,7 @@
 package net.sourceforge.peers.media;
 
+import net.sourceforge.peers.G729.codec.G729ADecoder;
+
 import java.util.ArrayList;
 
 /**
@@ -14,7 +16,7 @@ public class G729Decoder extends Decoder {
 
 
     public static byte[] decodeByte(byte[] bytes) {
-        org.restcomm.media.codec.g729.Decoder decoder = new org.restcomm.media.codec.g729.Decoder();
+        G729ADecoder decoder = new G729ADecoder();
         byte[] bb = new byte[bytes.length * 16];
         ArrayList<Byte> list = new ArrayList<>();
         for (int i = 0; i < bytes.length / 10; i++) {
