@@ -1,5 +1,7 @@
 import net.sourceforge.peers.g729.codec.G729ADecoder;
 import net.sourceforge.peers.g729.codec.G729AEncoder;
+import net.sourceforge.peers.g729.spi.memory.Frame;
+import net.sourceforge.peers.g729.spi.memory.Memory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
@@ -17,6 +19,50 @@ import java.util.Arrays;
  * 2019/7/2 10:57 AM
  */
 public class G729Coder {
+
+    public static byte[] pcm2g729(byte[] data) {
+        G729AEncoder encoder = new G729AEncoder();
+        ByteArrayOutputStream dstBuffer = new ByteArrayOutputStream();
+        try {
+            Frame buffer = Memory.allocate(320);
+            byte[] src = buffer.getData();
+            int readLen = 0;
+            while (readLen < data.length) {
+                int remainLen = data.length - readLen;
+                int onceLen = 320 < remainLen ? 320 : remainLen;
+                System.arraycopy(data, readLen, src, 0, onceLen);
+                readLen += onceLen;
+                buffer.setLength(onceLen);
+                byte[] encodeBytes = encoder.process(buffer).getData();
+                dstBuffer.write(encodeBytes);
+            }
+        } catch (Exception e) {
+
+        }
+        return dstBuffer.toByteArray();
+    }
+
+    public static byte[] g7292pcm(byte[] data) {
+        G729ADecoder decoder = new G729ADecoder();
+        ByteArrayOutputStream dstBuffer = new ByteArrayOutputStream();
+        try {
+            Frame buffer = Memory.allocate(20);
+            byte[] src = buffer.getData();
+            int readLen = 0;
+            while (readLen < data.length) {
+                int remainLen = data.length - readLen;
+                int onceLen = 20 < remainLen ? 20 : remainLen;
+                System.arraycopy(data, readLen, src, 0, onceLen);
+                readLen += onceLen;
+                buffer.setLength(onceLen);
+                byte[] encodeBytes = decoder.process(buffer).getData();
+                dstBuffer.write(encodeBytes);
+            }
+        } catch (Exception e) {
+
+        }
+        return dstBuffer.toByteArray();
+    }
 
     public static byte[] encodeByte(byte[] bytes) {
         G729AEncoder encoder = new G729AEncoder();
@@ -81,7 +127,7 @@ public class G729Coder {
 
         System.out.println("PCM audio len: " + pcm.length);
 
-        byte[] result = encodeByte(pcm);
+        byte[] result = pcm2g729(pcm);
 
         System.out.println("G729 encode len []: " + result.length);
         return result;
@@ -97,7 +143,7 @@ public class G729Coder {
 
         System.out.println("G729 decode to pcm len []: " + g729audio.length);
 
-        byte[] result = decodeByte(g729audio);
+        byte[] result = g7292pcm(g729audio);
 
         System.out.println("G729 decode to pcm len []: " + result.length);
         return result;

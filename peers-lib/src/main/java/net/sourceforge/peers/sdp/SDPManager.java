@@ -50,9 +50,9 @@ public class SDPManager {
         //TODO retrieve codecs from configuration file
 
         Codec codec = new Codec();
-        codec.setPayloadType(RFC3551.PAYLOAD_TYPE_G729);
-        codec.setName(RFC3551.G729);
-        supportedCodecs.add(codec);
+//        codec.setPayloadType(RFC3551.PAYLOAD_TYPE_G729);
+//        codec.setName(RFC3551.G729);
+//        supportedCodecs.add(codec);
         codec = new Codec();
         codec.setPayloadType(RFC3551.PAYLOAD_TYPE_PCMU);
         codec.setName(RFC3551.PCMU);
