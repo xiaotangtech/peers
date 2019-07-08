@@ -88,7 +88,7 @@ public class SDPManager {
                     if (supportedCodecs.contains(offerCodec)) {
                         String offerCodecName = offerCodec.getName();
                         if (offerCodecName.equalsIgnoreCase(RFC3551.PCMU) ||
-                                offerCodecName.equalsIgnoreCase(RFC3551.PCMA)) {
+                                offerCodecName.equalsIgnoreCase(RFC3551.PCMA)||offerCodecName.equalsIgnoreCase(RFC3551.G729)) {
                             int destPort = mediaDescription.getPort();
                             if (mediaDescription.getIpAddress() != null) {
                                 destAddress = mediaDescription.getIpAddress();
