@@ -30,7 +30,6 @@ import net.sourceforge.peers.rtp.RtpSession;
 import net.sourceforge.peers.sdp.Codec;
 
 
-
 public class CaptureRtpSender {
 
     public static final int PIPE_SIZE = 4096;
@@ -41,7 +40,7 @@ public class CaptureRtpSender {
     private RtpSender rtpSender;
 
     public CaptureRtpSender(RtpSession rtpSession, SoundSource soundSource,
-            boolean mediaDebug, Codec codec, Logger logger, String peersHome)
+                            boolean mediaDebug, Codec codec, Logger logger, String peersHome)
             throws IOException {
         super();
         this.rtpSession = rtpSession;
@@ -58,7 +57,7 @@ public class CaptureRtpSender {
             logger.error("input/output error", e);
             return;
         }
-        
+
         PipedOutputStream encodedDataOutput = new PipedOutputStream();
         PipedInputStream encodedDataInput;
         try {
@@ -70,25 +69,26 @@ public class CaptureRtpSender {
             return;
         }
         switch (codec.getPayloadType()) {
-        case RFC3551.PAYLOAD_TYPE_PCMU:
-            logger.info("xxxxxxxxxxxxxxxxxx:" + RFC3551.PCMU);
-            encoder = new PcmuEncoder(rawDataInput, encodedDataOutput,
-                    mediaDebug, logger, peersHome, latch);
-            break;
-        case RFC3551.PAYLOAD_TYPE_PCMA:
-            logger.info("xxxxxxxxxxxxxxxxxx:" + RFC3551.PCMA);
-            encoder = new PcmaEncoder(rawDataInput, encodedDataOutput,
-                    mediaDebug, logger, peersHome, latch);
-            break;
-        case RFC3551.PAYLOAD_TYPE_G729:
-            logger.info("xxxxxxxxxxxxxxxxxx:" + RFC3551.G729);
-            encoder = new G729Encoder(rawDataInput, encodedDataOutput,
-                    mediaDebug, logger, peersHome, latch);
-            break;
-        default:
-            encodedDataInput.close();
-            rawDataInput.close();
-            throw new RuntimeException("unknown payload type");
+            case RFC3551.PAYLOAD_TYPE_G729:
+                logger.info("xxxxxxxxxxxxxxxxxx:" + RFC3551.G729);
+                encoder = new G729Encoder(rawDataInput, encodedDataOutput,
+                        mediaDebug, logger, peersHome, latch);
+                break;
+            case RFC3551.PAYLOAD_TYPE_PCMU:
+                logger.info("xxxxxxxxxxxxxxxxxx:" + RFC3551.PCMU);
+                encoder = new PcmuEncoder(rawDataInput, encodedDataOutput,
+                        mediaDebug, logger, peersHome, latch);
+                break;
+            case RFC3551.PAYLOAD_TYPE_PCMA:
+                logger.info("xxxxxxxxxxxxxxxxxx:" + RFC3551.PCMA);
+                encoder = new PcmaEncoder(rawDataInput, encodedDataOutput,
+                        mediaDebug, logger, peersHome, latch);
+                break;
+
+            default:
+                encodedDataInput.close();
+                rawDataInput.close();
+                throw new RuntimeException("unknown payload type");
         }
         capture = new Capture(rawDataOutput, soundSource, logger, latch, encoder);
         rtpSender = new RtpSender(rawDataInput, rtpSession, mediaDebug,
@@ -96,22 +96,22 @@ public class CaptureRtpSender {
     }
 
     public void start() throws IOException {
-        
+
         capture.setStopped(false);
         // encoder.setStopped(false);
         rtpSender.setStopped(false);
-        
+
         Thread captureThread = new Thread(capture,
                 Capture.class.getSimpleName());
         // Thread encoderThread = new Thread(encoder,
         //         Encoder.class.getSimpleName());
         Thread rtpSenderThread = new Thread(rtpSender,
                 RtpSender.class.getSimpleName());
-        
+
         captureThread.start();
         // encoderThread.start();
         rtpSenderThread.start();
-        
+
     }
 
     public void stop() {

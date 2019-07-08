@@ -35,27 +35,27 @@ public class IncomingRtpReader implements RtpListener {
     private Decoder decoder;
 
     public IncomingRtpReader(RtpSession rtpSession,
-            AbstractSoundManager soundManager, Codec codec, Logger logger)
+                             AbstractSoundManager soundManager, Codec codec, Logger logger)
             throws IOException {
         logger.debug("playback codec:" + codec.toString().trim());
         this.rtpSession = rtpSession;
         this.soundManager = soundManager;
         switch (codec.getPayloadType()) {
-        case RFC3551.PAYLOAD_TYPE_PCMU:
-            decoder = new PcmuDecoder();
-            break;
-        case RFC3551.PAYLOAD_TYPE_PCMA:
-            decoder = new PcmaDecoder();
-            break;
-        case RFC3551.PAYLOAD_TYPE_G729:
-            decoder = new G729Decoder();
-            break;
-        default:
-            throw new RuntimeException("unsupported payload type");
+            case RFC3551.PAYLOAD_TYPE_G729:
+                decoder = new G729Decoder();
+                break;
+            case RFC3551.PAYLOAD_TYPE_PCMU:
+                decoder = new PcmuDecoder();
+                break;
+            case RFC3551.PAYLOAD_TYPE_PCMA:
+                decoder = new PcmaDecoder();
+                break;
+            default:
+                throw new RuntimeException("unsupported payload type");
         }
         rtpSession.addRtpListener(this);
     }
-    
+
     public void start() {
         rtpSession.start();
     }
