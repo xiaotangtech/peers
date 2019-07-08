@@ -1,6 +1,6 @@
-package net.sourceforge.peers.G729.spi.dtmf;
+package net.sourceforge.peers.g729.spi.dtmf;
 
-import net.sourceforge.peers.G729.spi.listener.Listener;
+import net.sourceforge.peers.g729.spi.listener.Listener;
 
 public interface DtmfGeneratorListener extends Listener<DtmfGeneratorEvent> {
 }

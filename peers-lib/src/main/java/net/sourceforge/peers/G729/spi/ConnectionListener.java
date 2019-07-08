@@ -1,6 +1,6 @@
-package net.sourceforge.peers.G729.spi;
+package net.sourceforge.peers.g729.spi;
 
-import net.sourceforge.peers.G729.spi.listener.Listener;
+import net.sourceforge.peers.g729.spi.listener.Listener;
 
 public interface ConnectionListener extends Listener<ConnectionEvent> {
 }
