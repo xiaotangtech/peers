@@ -2,7 +2,10 @@ package net.sourceforge.peers.media;
 
 import net.sourceforge.peers.Logger;
 import net.sourceforge.peers.g729.codec.G729ADecoder;
+import net.sourceforge.peers.g729.spi.memory.Frame;
+import net.sourceforge.peers.g729.spi.memory.Memory;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 /**
@@ -13,15 +16,42 @@ public class G729Decoder extends Decoder {
 
     private Logger logger;
 
+    private G729ADecoder decoder;
+
     public G729Decoder(Logger logger) {
+        decoder = new G729ADecoder();
         this.logger = logger;
     }
 
     @Override
     public byte[] process(byte[] media) {
-        return decodeByte(media);
+        logger.debug("-----------------G729 Dncoder 2 PCM Before length:" + media.length);
+        byte[] g7292pcm = g7292pcm(media);
+        logger.debug("-----------------G729 Dncoder 2 PCM After length:" + g7292pcm.length);
+        return g7292pcm;
     }
 
+    public byte[] g7292pcm(byte[] data) {
+
+        ByteArrayOutputStream dstBuffer = new ByteArrayOutputStream();
+        try {
+            Frame buffer = Memory.allocate(20);
+            byte[] src = buffer.getData();
+            int readLen = 0;
+            while (readLen < data.length) {
+                int remainLen = data.length - readLen;
+                int onceLen = 20 < remainLen ? 20 : remainLen;
+                System.arraycopy(data, readLen, src, 0, onceLen);
+                readLen += onceLen;
+                buffer.setLength(onceLen);
+                byte[] encodeBytes = decoder.process(buffer).getData();
+                dstBuffer.write(encodeBytes);
+            }
+        } catch (Exception e) {
+
+        }
+        return dstBuffer.toByteArray();
+    }
 
     public byte[] decodeByte(byte[] bytes) {
         logger.debug("-----------------G729Decoder before length:" + bytes.length);

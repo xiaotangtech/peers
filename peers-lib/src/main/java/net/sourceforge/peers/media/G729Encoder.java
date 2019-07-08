@@ -2,7 +2,10 @@ package net.sourceforge.peers.media;
 
 import net.sourceforge.peers.g729.codec.G729AEncoder;
 import net.sourceforge.peers.Logger;
+import net.sourceforge.peers.g729.spi.memory.Frame;
+import net.sourceforge.peers.g729.spi.memory.Memory;
 
+import java.io.ByteArrayOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.util.ArrayList;
@@ -17,14 +20,41 @@ public class G729Encoder extends Encoder{
 
     private Logger logger;
 
+    private G729AEncoder encoder;
+
     public G729Encoder(PipedInputStream rawData, PipedOutputStream encodedData, boolean mediaDebug, Logger logger, String peersHome, CountDownLatch latch) {
         super(rawData, encodedData, mediaDebug, logger, peersHome, latch);
+        encoder = new G729AEncoder();
         this.logger=logger;
     }
 
     @Override
     public byte[] process(byte[] media) {
-        return encodeByte(media);
+        logger.debug("+++++++++++++++++++PCM Encoder 2 G729 Before length:" + media.length);
+        byte[] bytes = pcm2g729(media);
+        logger.debug("+++++++++++++++++++PCM Encoder 2 G729 after length:" + bytes.length);
+        return pcm2g729(media);
+    }
+
+    public byte[] pcm2g729(byte[] data) {
+        ByteArrayOutputStream dstBuffer = new ByteArrayOutputStream();
+        try {
+            Frame buffer = Memory.allocate(320);
+            byte[] src = buffer.getData();
+            int readLen = 0;
+            while (readLen < data.length) {
+                int remainLen = data.length - readLen;
+                int onceLen = 320 < remainLen ? 320 : remainLen;
+                System.arraycopy(data, readLen, src, 0, onceLen);
+                readLen += onceLen;
+                buffer.setLength(onceLen);
+                byte[] encodeBytes = encoder.process(buffer).getData();
+                dstBuffer.write(encodeBytes);
+            }
+        } catch (Exception e) {
+
+        }
+        return dstBuffer.toByteArray();
     }
 
     public byte[] encodeByte(byte[] bytes) {
