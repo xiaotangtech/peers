@@ -1,6 +1,6 @@
-package net.sourceforge.peers.g729;
+package net.sourceforge.peers.G729;
 
-import net.sourceforge.peers.g729.spi.memory.Frame;
+import net.sourceforge.peers.G729.spi.memory.Frame;
 
 public interface MediaSink extends Component {
     boolean isStarted();

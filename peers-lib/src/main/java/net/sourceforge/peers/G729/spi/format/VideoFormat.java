@@ -1,4 +1,4 @@
-package net.sourceforge.peers.g729.spi.format;
+package net.sourceforge.peers.G729.spi.format;
 
 public class VideoFormat extends Format implements Cloneable {
     private int frameRate;

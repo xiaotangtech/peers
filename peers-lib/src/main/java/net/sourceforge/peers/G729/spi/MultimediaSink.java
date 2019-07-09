@@ -1,6 +1,6 @@
-package net.sourceforge.peers.g729.spi;
+package net.sourceforge.peers.G729.spi;
 
-import net.sourceforge.peers.g729.MediaSink;
+import net.sourceforge.peers.G729.MediaSink;
 
 import java.util.Collection;
 

@@ -1,4 +1,4 @@
-package net.sourceforge.peers.g729.codec;
+package net.sourceforge.peers.G729.codec;
 
 public class CodLD8K {
     float[] old_speech_array = new float[240];

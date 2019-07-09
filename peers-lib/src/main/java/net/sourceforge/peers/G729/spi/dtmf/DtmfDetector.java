@@ -1,7 +1,7 @@
-package net.sourceforge.peers.g729.spi.dtmf;
+package net.sourceforge.peers.G729.spi.dtmf;
 
-import net.sourceforge.peers.g729.MediaSink;
-import net.sourceforge.peers.g729.spi.listener.TooManyListenersException;
+import net.sourceforge.peers.G729.MediaSink;
+import net.sourceforge.peers.G729.spi.listener.TooManyListenersException;
 
 public interface DtmfDetector extends MediaSink {
     int DEFAULT_SIGNAL_LEVEL = -30;

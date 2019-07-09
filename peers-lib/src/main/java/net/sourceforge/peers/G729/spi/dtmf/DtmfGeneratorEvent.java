@@ -1,6 +1,6 @@
-package net.sourceforge.peers.g729.spi.dtmf;
+package net.sourceforge.peers.G729.spi.dtmf;
 
-import net.sourceforge.peers.g729.spi.listener.Event;
+import net.sourceforge.peers.G729.spi.listener.Event;
 
 public class DtmfGeneratorEvent implements Event<DtmfGenerator> {
     public static final int COMPLETED = 1;

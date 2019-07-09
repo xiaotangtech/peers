@@ -1,4 +1,4 @@
-package net.sourceforge.peers.g729.spi.player;
+package net.sourceforge.peers.G729.spi.player;
 
 public interface PlayerProvider {
     Player provide();

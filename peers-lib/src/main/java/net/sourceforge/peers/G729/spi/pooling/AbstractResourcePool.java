@@ -1,4 +1,4 @@
-package net.sourceforge.peers.g729.spi.pooling;
+package net.sourceforge.peers.G729.spi.pooling;
 
 import java.util.Queue;
 import java.util.concurrent.atomic.AtomicInteger;

@@ -1,6 +1,6 @@
-package net.sourceforge.peers.g729.spi.tone;
+package net.sourceforge.peers.G729.spi.tone;
 
-import net.sourceforge.peers.g729.spi.listener.Listener;
+import net.sourceforge.peers.G729.spi.listener.Listener;
 
 public interface ToneDetectorListener extends Listener<ToneEvent> {
 }

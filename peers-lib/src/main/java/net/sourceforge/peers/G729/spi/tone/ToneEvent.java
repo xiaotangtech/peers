@@ -1,6 +1,6 @@
-package net.sourceforge.peers.g729.spi.tone;
+package net.sourceforge.peers.G729.spi.tone;
 
-import net.sourceforge.peers.g729.spi.listener.Event;
+import net.sourceforge.peers.G729.spi.listener.Event;
 
 public interface ToneEvent extends Event<ToneDetector> {
     int getFrequency();

@@ -1,4 +1,4 @@
-package net.sourceforge.peers.g729.concurrent;
+package net.sourceforge.peers.G729.concurrent;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Condition;

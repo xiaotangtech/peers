@@ -1,6 +1,6 @@
-package net.sourceforge.peers.g729.scheduler;
+package net.sourceforge.peers.G729.scheduler;
 
-import net.sourceforge.peers.g729.concurrent.ConcurrentCyclicFIFO;
+import net.sourceforge.peers.G729.concurrent.ConcurrentCyclicFIFO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

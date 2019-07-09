@@ -1,8 +1,8 @@
-package net.sourceforge.peers.g729.spi.player;
+package net.sourceforge.peers.G729.spi.player;
 
-import net.sourceforge.peers.g729.MediaSource;
-import net.sourceforge.peers.g729.spi.ResourceUnavailableException;
-import net.sourceforge.peers.g729.spi.listener.TooManyListenersException;
+import net.sourceforge.peers.G729.MediaSource;
+import net.sourceforge.peers.G729.spi.ResourceUnavailableException;
+import net.sourceforge.peers.G729.spi.listener.TooManyListenersException;
 
 import java.net.MalformedURLException;
 

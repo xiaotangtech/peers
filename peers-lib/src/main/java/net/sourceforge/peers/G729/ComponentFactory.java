@@ -1,6 +1,6 @@
-package net.sourceforge.peers.g729;
+package net.sourceforge.peers.G729;
 
-import net.sourceforge.peers.g729.spi.Connection;
+import net.sourceforge.peers.G729.spi.Connection;
 
 public interface ComponentFactory {
     Component newAudioComponent(ComponentType var1);

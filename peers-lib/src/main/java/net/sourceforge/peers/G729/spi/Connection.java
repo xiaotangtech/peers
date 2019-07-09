@@ -1,6 +1,6 @@
-package net.sourceforge.peers.g729.spi;
+package net.sourceforge.peers.G729.spi;
 
-import net.sourceforge.peers.g729.spi.utils.Text;
+import net.sourceforge.peers.G729.spi.utils.Text;
 
 import java.io.IOException;
 

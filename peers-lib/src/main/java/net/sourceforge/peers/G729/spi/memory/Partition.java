@@ -1,7 +1,7 @@
-package net.sourceforge.peers.g729.spi.memory;
+package net.sourceforge.peers.G729.spi.memory;
 
 
-import net.sourceforge.peers.g729.concurrent.ConcurrentCyclicFIFO;
+import net.sourceforge.peers.G729.concurrent.ConcurrentCyclicFIFO;
 
 public class Partition {
     protected int size;

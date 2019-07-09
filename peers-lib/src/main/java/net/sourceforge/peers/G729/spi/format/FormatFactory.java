@@ -1,7 +1,7 @@
-package net.sourceforge.peers.g729.spi.format;
+package net.sourceforge.peers.G729.spi.format;
 
-import net.sourceforge.peers.g729.spi.format.audio.DTMFFormat;
-import net.sourceforge.peers.g729.spi.utils.Text;
+import net.sourceforge.peers.G729.spi.format.audio.DTMFFormat;
+import net.sourceforge.peers.G729.spi.utils.Text;
 
 public class FormatFactory {
     private static Text DTMF = new Text("telephone-event");

@@ -1,10 +1,10 @@
-package net.sourceforge.peers.g729.codec;
+package net.sourceforge.peers.G729.codec;
 
-import net.sourceforge.peers.g729.spi.dsp.Codec;
-import net.sourceforge.peers.g729.spi.format.Format;
-import net.sourceforge.peers.g729.spi.format.FormatFactory;
-import net.sourceforge.peers.g729.spi.memory.Frame;
-import net.sourceforge.peers.g729.spi.memory.Memory;
+import net.sourceforge.peers.G729.spi.dsp.Codec;
+import net.sourceforge.peers.G729.spi.format.Format;
+import net.sourceforge.peers.G729.spi.format.FormatFactory;
+import net.sourceforge.peers.G729.spi.memory.Frame;
+import net.sourceforge.peers.G729.spi.memory.Memory;
 
 public class G729ADecoder implements Codec {
     private static final Format g729 = FormatFactory.createAudioFormat("g729", 8000);

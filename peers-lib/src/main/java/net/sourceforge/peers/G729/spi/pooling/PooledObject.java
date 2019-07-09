@@ -1,4 +1,4 @@
-package net.sourceforge.peers.g729.spi.pooling;
+package net.sourceforge.peers.G729.spi.pooling;
 
 public interface PooledObject {
     void checkIn();

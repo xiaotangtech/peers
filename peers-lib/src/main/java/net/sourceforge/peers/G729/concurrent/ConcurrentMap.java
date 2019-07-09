@@ -1,4 +1,4 @@
-package net.sourceforge.peers.g729.concurrent;
+package net.sourceforge.peers.G729.concurrent;
 
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;

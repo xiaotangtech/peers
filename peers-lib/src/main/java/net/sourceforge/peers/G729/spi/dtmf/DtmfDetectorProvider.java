@@ -1,4 +1,4 @@
-package net.sourceforge.peers.g729.spi.dtmf;
+package net.sourceforge.peers.G729.spi.dtmf;
 
 public interface DtmfDetectorProvider {
     DtmfDetector provide();

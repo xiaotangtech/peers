@@ -1,6 +1,6 @@
-package net.sourceforge.peers.g729.spi.recorder;
+package net.sourceforge.peers.G729.spi.recorder;
 
-import net.sourceforge.peers.g729.spi.listener.Event;
+import net.sourceforge.peers.G729.spi.listener.Event;
 
 public interface RecorderEvent extends Event<Recorder> {
     int START = 1;

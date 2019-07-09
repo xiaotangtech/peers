@@ -1,4 +1,4 @@
-package net.sourceforge.peers.g729.scheduler;
+package net.sourceforge.peers.G729.scheduler;
 
 import java.util.concurrent.TimeUnit;
 

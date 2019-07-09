@@ -1,4 +1,4 @@
-package net.sourceforge.peers.g729.codec;
+package net.sourceforge.peers.G729.codec;
 
 public class LspGetq {
     public LspGetq() {

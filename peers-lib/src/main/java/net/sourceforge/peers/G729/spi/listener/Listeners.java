@@ -1,4 +1,4 @@
-package net.sourceforge.peers.g729.spi.listener;
+package net.sourceforge.peers.G729.spi.listener;
 
 import java.util.ArrayList;
 import java.util.concurrent.Semaphore;

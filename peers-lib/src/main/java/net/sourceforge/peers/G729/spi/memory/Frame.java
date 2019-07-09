@@ -1,6 +1,6 @@
-package net.sourceforge.peers.g729.spi.memory;
+package net.sourceforge.peers.G729.spi.memory;
 
-import net.sourceforge.peers.g729.spi.format.Format;
+import net.sourceforge.peers.G729.spi.format.Format;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 

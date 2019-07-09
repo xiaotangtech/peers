@@ -1,4 +1,4 @@
-package net.sourceforge.peers.g729.spi.resource;
+package net.sourceforge.peers.G729.spi.resource;
 
 public interface TTSEngine {
     void setVoiceName(String var1);

@@ -1,7 +1,7 @@
-package net.sourceforge.peers.g729.scheduler;
+package net.sourceforge.peers.G729.scheduler;
 
 
-import net.sourceforge.peers.g729.concurrent.ConcurrentCyclicFIFO;
+import net.sourceforge.peers.G729.concurrent.ConcurrentCyclicFIFO;
 
 public class OrderedTaskQueue {
 	//inner holder for tasks

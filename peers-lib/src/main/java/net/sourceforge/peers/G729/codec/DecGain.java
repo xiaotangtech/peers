@@ -1,4 +1,4 @@
-package net.sourceforge.peers.g729.codec;
+package net.sourceforge.peers.G729.codec;
 
 public class DecGain {
     float[] past_qua_en = new float[]{-14.0F, -14.0F, -14.0F, -14.0F};

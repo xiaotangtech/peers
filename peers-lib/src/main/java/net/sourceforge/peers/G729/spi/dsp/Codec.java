@@ -1,8 +1,8 @@
-package net.sourceforge.peers.g729.spi.dsp;
+package net.sourceforge.peers.G729.spi.dsp;
 
 
-import net.sourceforge.peers.g729.spi.format.Format;
-import net.sourceforge.peers.g729.spi.memory.Frame;
+import net.sourceforge.peers.G729.spi.format.Format;
+import net.sourceforge.peers.G729.spi.memory.Frame;
 
 import java.io.Serializable;
 

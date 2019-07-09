@@ -1,4 +1,4 @@
-package net.sourceforge.peers.g729.spi;
+package net.sourceforge.peers.G729.spi;
 
 public enum ConnectionState {
     NULL(0, "NULL", -1L),

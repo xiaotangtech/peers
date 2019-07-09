@@ -1,4 +1,4 @@
-package net.sourceforge.peers.g729.spi.dsp;
+package net.sourceforge.peers.G729.spi.dsp;
 
 import java.util.List;
 

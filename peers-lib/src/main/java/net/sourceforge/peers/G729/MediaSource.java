@@ -1,4 +1,4 @@
-package net.sourceforge.peers.g729;
+package net.sourceforge.peers.G729;
 
 public interface MediaSource extends Component {
     void setInitialDelay(long var1);

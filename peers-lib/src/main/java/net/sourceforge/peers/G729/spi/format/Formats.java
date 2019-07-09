@@ -1,4 +1,4 @@
-package net.sourceforge.peers.g729.spi.format;
+package net.sourceforge.peers.G729.spi.format;
 
 import java.util.ArrayList;
 import java.util.Iterator;

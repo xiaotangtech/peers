@@ -1,6 +1,6 @@
-package net.sourceforge.peers.g729.spi.player;
+package net.sourceforge.peers.G729.spi.player;
 
-import net.sourceforge.peers.g729.spi.listener.Event;
+import net.sourceforge.peers.G729.spi.listener.Event;
 
 public interface PlayerEvent extends Event<Player> {
     int START = 1;

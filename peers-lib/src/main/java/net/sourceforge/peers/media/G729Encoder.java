@@ -1,9 +1,9 @@
 package net.sourceforge.peers.media;
 
 import net.sourceforge.peers.Logger;
-import net.sourceforge.peers.g729.codec.G729AEncoder;
-import net.sourceforge.peers.g729.spi.memory.Frame;
-import net.sourceforge.peers.g729.spi.memory.Memory;
+import net.sourceforge.peers.G729.codec.G729AEncoder;
+import net.sourceforge.peers.G729.spi.memory.Frame;
+import net.sourceforge.peers.G729.spi.memory.Memory;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
