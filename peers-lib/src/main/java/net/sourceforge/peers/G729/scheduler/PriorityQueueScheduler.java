@@ -1,8 +1,6 @@
 package net.sourceforge.peers.G729.scheduler;
 
 import net.sourceforge.peers.G729.concurrent.ConcurrentCyclicFIFO;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.LockSupport;
@@ -22,7 +20,7 @@ public class PriorityQueueScheduler {
     private PriorityQueueScheduler.CoreThread coreThread;
     private PriorityQueueScheduler.CriticalThread criticalThread;
     private boolean isActive;
-    private Logger logger;
+//    private Logger logger;
     private ConcurrentCyclicFIFO<Task> waitingTasks;
     private ConcurrentCyclicFIFO<Task> criticalTasks;
     private PriorityQueueScheduler.WorkerThread[] workerThreads;
@@ -31,7 +29,7 @@ public class PriorityQueueScheduler {
     public PriorityQueueScheduler(Clock clock) {
         this.taskQueues = new OrderedTaskQueue[7];
         this.heartBeatQueue = new OrderedTaskQueue[5];
-        this.logger = LogManager.getLogger(PriorityQueueScheduler.class);
+//        this.logger = LogManager.getLogger(PriorityQueueScheduler.class);
         this.waitingTasks = new ConcurrentCyclicFIFO();
         this.criticalTasks = new ConcurrentCyclicFIFO();
         this.clock = clock;
@@ -96,7 +94,7 @@ public class PriorityQueueScheduler {
                 throw new IllegalStateException("Clock is not set");
             } else {
                 this.isActive = true;
-                this.logger.info("Starting ");
+//                this.logger.info("Starting ");
                 this.coreThread.activate();
                 this.criticalThread.activate();
 
@@ -109,7 +107,7 @@ public class PriorityQueueScheduler {
                     this.criticalWorkerThreads[i].activate();
                 }
 
-                this.logger.info("Started ");
+//                this.logger.info("Started ");
             }
         }
     }
@@ -205,7 +203,7 @@ public class PriorityQueueScheduler {
                     try {
                         this.current = (Task)PriorityQueueScheduler.this.waitingTasks.take();
                     } catch (Exception var2) {
-                        PriorityQueueScheduler.this.logger.warn("Could not poll waiting task in timely fashion. Will keep trying.");
+//                        PriorityQueueScheduler.this.logger.warn("Could not poll waiting task in timely fashion. Will keep trying.");
                     }
                 }
 

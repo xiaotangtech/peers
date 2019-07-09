@@ -3,8 +3,6 @@ package net.sourceforge.peers.G729.scheduler;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public abstract class Task implements Runnable {
     private static AtomicInteger id = new AtomicInteger(0);
@@ -14,7 +12,7 @@ public abstract class Task implements Runnable {
     private final Object LOCK = new Object();
     private AtomicBoolean inQueue0 = new AtomicBoolean(false);
     private AtomicBoolean inQueue1 = new AtomicBoolean(false);
-    private Logger logger = LogManager.getLogger(Task.class);
+//    private Logger logger = LogManager.getLogger(Task.class);
     protected int taskId;
 
     public Task() {
@@ -68,7 +66,7 @@ public abstract class Task implements Runnable {
                     this.listener.onTerminate();
                 }
             } catch (Exception var2) {
-                this.logger.error("Could not execute task " + this.taskId + ": " + var2.getMessage(), var2);
+//                this.logger.error("Could not execute task " + this.taskId + ": " + var2.getMessage(), var2);
                 if (this.listener != null) {
                     this.listener.handlerError(var2);
                 }

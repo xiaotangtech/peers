@@ -1,13 +1,12 @@
 package net.sourceforge.peers.G729.scheduler;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ServiceScheduler implements Scheduler {
-    private static final Logger LOGGER = LogManager.getLogger(ServiceScheduler.class);
+//    private static final Logger LOGGER = LogManager.getLogger(ServiceScheduler.class);
     public static final int POOL_SIZE = Runtime.getRuntime().availableProcessors();
     private volatile boolean started;
     private final Clock wallClock;
@@ -64,7 +63,7 @@ public class ServiceScheduler implements Scheduler {
             this.executor = Executors.newScheduledThreadPool(POOL_SIZE, this.threadFactory);
             ((ScheduledThreadPoolExecutor)this.executor).setRemoveOnCancelPolicy(true);
             ((ScheduledThreadPoolExecutor)this.executor).prestartAllCoreThreads();
-            LOGGER.info("Started scheduler!");
+//            LOGGER.info("Started scheduler!");
         }
 
     }
@@ -73,7 +72,7 @@ public class ServiceScheduler implements Scheduler {
         if (this.started) {
             this.started = false;
             this.executor.shutdownNow();
-            LOGGER.info("Stopped scheduler!");
+//            LOGGER.info("Stopped scheduler!");
         }
 
     }
