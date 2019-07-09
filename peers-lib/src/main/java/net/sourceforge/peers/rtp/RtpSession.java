@@ -109,9 +109,7 @@ public class RtpSession {
         if (datagramSocket == null) {
             return;
         }
-        logger.debug("RTP===发送===编码前length====:"+rtpPacket.getData().length);
         byte[] buf = rtpParser.encode(rtpPacket);
-        logger.debug("RTP===发送===编码后length====:"+buf.length);
         logger.info("rtp send " + buf.length);
         final DatagramPacket datagramPacket =
                 new DatagramPacket(buf, buf.length,
@@ -248,7 +246,6 @@ public class RtpSession {
             }
 
             RtpPacket rtpPacket = rtpParser.decode(trimmedData);
-            logger.debug("RTP===接收原始包length====:"+rtpPacket.getData().length);
             for (RtpListener rtpListener: rtpListeners) {
                 rtpListener.receivedRtpPacket(rtpPacket);
             }

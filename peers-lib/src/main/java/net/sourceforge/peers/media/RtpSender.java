@@ -53,7 +53,7 @@ public class RtpSender implements Runnable {
     public RtpSender(PipedInputStream encodedData, RtpSession rtpSession,
             boolean mediaDebug, Codec codec, Logger logger, String peersHome,
             CountDownLatch latch) {
-        this.encodedData = encodedData;
+        this.encodedData = encodedData;//编码后的数据
         this.rtpSession = rtpSession;
         this.mediaDebug = mediaDebug;
         this.codec = codec;
@@ -103,7 +103,7 @@ public class RtpSender implements Runnable {
         long lastSentTime = System.nanoTime();
         // indicate if its the first time that we send a packet (dont wait)
         boolean firstTime = true;
-        
+
         while (!isStopped) {
             numBytesRead = 0;
             try {
@@ -124,6 +124,7 @@ public class RtpSender implements Runnable {
             } else {
                 trimmedBuffer = buffer;
             }
+            logger.debug("RtpSender 一次发送前数据大小："+trimmedBuffer.length);
             if (mediaDebug) {
                 try {
                     rtpSenderInput.write(trimmedBuffer); // TODO use classpath

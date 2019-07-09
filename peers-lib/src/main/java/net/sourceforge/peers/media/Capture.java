@@ -30,7 +30,8 @@ public class Capture implements Runnable {
     
     public static final int SAMPLE_SIZE = 16;
     public static final int BUFFER_SIZE = SAMPLE_SIZE * 20;
-    
+    public static final int BUFFER_SIZE_G729 = 20;
+
     private PipedOutputStream rawData;
     private boolean isStopped;
     private SoundSource soundSource;
@@ -57,7 +58,6 @@ public class Capture implements Runnable {
                 if (buffer == null) {
                     break;
                 }
-                logger.debug("PCMPCMPCMPCM======PCMPCMPCMPCM======::"+buffer.length);
                 rawData.write(encoder.process(buffer));
                 // rawData.write(buffer);
                 rawData.flush();
