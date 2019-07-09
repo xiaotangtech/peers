@@ -54,8 +54,6 @@ public class G729Decoder extends Decoder {
     }
 
     public byte[] decodeByte(byte[] bytes) {
-        logger.debug("-----------------G729Decoder before length:" + bytes.length);
-        G729ADecoder decoder = new G729ADecoder();
         byte[] bb = new byte[bytes.length * 16];
         ArrayList<Byte> list = new ArrayList<>();
         for (int i = 0; i < bytes.length / 10; i++) {
@@ -70,7 +68,6 @@ public class G729Decoder extends Decoder {
         for (int i = 0; i < list.size(); i++) {
             bb[i] = list.get(i);
         }
-        logger.debug("-----------------G729Decoder after length:" + bb.length);
         return bb;
     }
 }
