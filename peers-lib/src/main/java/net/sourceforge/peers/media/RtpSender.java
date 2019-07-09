@@ -116,9 +116,8 @@ public class RtpSender implements Runnable {
                     // expect that the buffer is full
                     tempBytesRead = encodedData.read(buffer, numBytesRead,
                             buf_size - numBytesRead);
-                    logger.debug("RtpSender 遍历编码数据第【"+tt+"】次；length："+tempBytesRead);
+                    logger.debug("RtpSender 遍历编码数据第【"+ tt++ +"】次；length："+tempBytesRead);
                     numBytesRead += tempBytesRead;
-                    tt++;
                 }
             } catch (IOException e) {
                 logger.error("input/output error", e);
@@ -214,4 +213,8 @@ public class RtpSender implements Runnable {
         this.pushedPackets.addAll(rtpPackets);
     }
 
+
+    public static void main(String[] args) {
+        System.out.println(System.nanoTime());
+    }
 }
