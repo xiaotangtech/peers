@@ -125,7 +125,7 @@ public class RtpSender implements Runnable {
             byte[] trimmedBuffer;
 //              = new byte[numBytesRead];
 //            System.arraycopy(buffer, 0, trimmedBuffer, 0, numBytesRead);
-            if (numBytesRead < buffer.length) {
+            if (numBytesRead <= buffer.length) {
                 trimmedBuffer = new byte[numBytesRead];
                 System.arraycopy(buffer, 0, trimmedBuffer, 0, numBytesRead);
             } else {
