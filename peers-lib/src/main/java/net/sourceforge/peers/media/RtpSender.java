@@ -33,6 +33,7 @@ import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 
 import net.sourceforge.peers.Logger;
+import net.sourceforge.peers.rtp.RFC3551;
 import net.sourceforge.peers.rtp.RtpPacket;
 import net.sourceforge.peers.rtp.RtpSession;
 import net.sourceforge.peers.sdp.Codec;
@@ -94,6 +95,9 @@ public class RtpSender implements Runnable {
         rtpPacket.setSequenceNumber(sequenceNumber);
         rtpPacket.setSsrc(random.nextInt());
         int buf_size = Capture.BUFFER_SIZE / 2;
+        if(codec.getPayloadType()== RFC3551.PAYLOAD_TYPE_G729){
+            buf_size = 20;
+        }
         byte[] buffer = new byte[buf_size];
         int timestamp = 0;
         int numBytesRead;
