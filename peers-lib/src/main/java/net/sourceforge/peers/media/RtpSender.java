@@ -96,7 +96,7 @@ public class RtpSender implements Runnable {
         rtpPacket.setSsrc(random.nextInt());
         int buf_size = Capture.BUFFER_SIZE / 2;
         if(codec.getPayloadType()== RFC3551.PAYLOAD_TYPE_G729){
-            buf_size = 20;
+            buf_size = Capture.BUFFER_SIZE_G729;
         }
         byte[] buffer = new byte[buf_size];
         int timestamp = 0;
@@ -111,24 +111,28 @@ public class RtpSender implements Runnable {
         while (!isStopped) {
             numBytesRead = 0;
             try {
+                int tt = 0;
                 while (!isStopped && numBytesRead < buf_size) {
                     // expect that the buffer is full
                     tempBytesRead = encodedData.read(buffer, numBytesRead,
                             buf_size - numBytesRead);
+                    logger.debug("RtpSender 遍历编码数据第【"+tt+"】次；length："+tempBytesRead);
                     numBytesRead += tempBytesRead;
+                    tt++;
                 }
             } catch (IOException e) {
                 logger.error("input/output error", e);
                 return;
             }
-            byte[] trimmedBuffer;
-            if (numBytesRead < buffer.length) {
-                trimmedBuffer = new byte[numBytesRead];
-                System.arraycopy(buffer, 0, trimmedBuffer, 0, numBytesRead);
-            } else {
-                trimmedBuffer = buffer;
-            }
-            logger.debug("RtpSender 一次发送前数据大小："+trimmedBuffer.length);
+            byte[] trimmedBuffer = new byte[numBytesRead];
+            System.arraycopy(buffer, 0, trimmedBuffer, 0, numBytesRead);
+//            if (numBytesRead < buffer.length) {
+//                trimmedBuffer = new byte[numBytesRead];
+//                System.arraycopy(buffer, 0, trimmedBuffer, 0, numBytesRead);
+//            } else {
+//                trimmedBuffer = buffer;
+//            }
+            logger.debug("RtpSender 一次发送前数据length："+trimmedBuffer.length);
             if (mediaDebug) {
                 try {
                     rtpSenderInput.write(trimmedBuffer); // TODO use classpath
