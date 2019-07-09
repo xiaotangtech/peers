@@ -95,9 +95,9 @@ public class RtpSender implements Runnable {
         rtpPacket.setSequenceNumber(sequenceNumber);
         rtpPacket.setSsrc(random.nextInt());
         int buf_size = Capture.BUFFER_SIZE / 2;
-        if(codec.getPayloadType()== RFC3551.PAYLOAD_TYPE_G729){
-            buf_size = Capture.BUFFER_SIZE_G729;
-        }
+//        if(codec.getPayloadType()== RFC3551.PAYLOAD_TYPE_G729){
+//            buf_size = Capture.BUFFER_SIZE_G729;
+//        }
         byte[] buffer = new byte[buf_size];
         int timestamp = 0;
         int numBytesRead;
@@ -123,8 +123,6 @@ public class RtpSender implements Runnable {
                 return;
             }
             byte[] trimmedBuffer;
-//              = new byte[numBytesRead];
-//            System.arraycopy(buffer, 0, trimmedBuffer, 0, numBytesRead);
             if (numBytesRead <= buffer.length) {
                 trimmedBuffer = new byte[numBytesRead];
                 System.arraycopy(buffer, 0, trimmedBuffer, 0, numBytesRead);
