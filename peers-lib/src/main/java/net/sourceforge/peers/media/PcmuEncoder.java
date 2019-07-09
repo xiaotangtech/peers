@@ -32,6 +32,8 @@ public class PcmuEncoder extends Encoder {
         0xFFF, 0x1FFF, 0x3FFF, 0x7FFF
     };
 
+    private Logger logger;
+
     /*
      * linear2ulaw() - Convert a linear PCM value to u-law
      *
@@ -106,6 +108,7 @@ public class PcmuEncoder extends Encoder {
             boolean mediaDebug, Logger logger, String peersHome,
             CountDownLatch latch) {
         super(rawData, encodedData, mediaDebug, logger, peersHome, latch);
+        this.logger = logger;
     }
 
     /**
@@ -123,6 +126,7 @@ public class PcmuEncoder extends Encoder {
             short sample = (short) ((media[j++] & 0xff) | ((media[j++]) << 8));
             compressed[i] = linear2ulaw(sample);
         }
+        logger.debug("PcmU Encode after size: "+compressed.length);
         return compressed;
     }
 

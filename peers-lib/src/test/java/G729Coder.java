@@ -20,8 +20,7 @@ import java.util.Arrays;
  */
 public class G729Coder {
 
-    public static byte[] pcm2g729(byte[] data) {
-        G729AEncoder encoder = new G729AEncoder();
+    public static byte[] pcm2g729(G729AEncoder encoder,byte[] data) {
         ByteArrayOutputStream dstBuffer = new ByteArrayOutputStream();
         try {
             Frame buffer = Memory.allocate(320);
@@ -42,8 +41,7 @@ public class G729Coder {
         return dstBuffer.toByteArray();
     }
 
-    public static byte[] g7292pcm(byte[] data) {
-        G729ADecoder decoder = new G729ADecoder();
+    public static byte[] g7292pcm(G729ADecoder decoder,byte[] data) {
         ByteArrayOutputStream dstBuffer = new ByteArrayOutputStream();
         try {
             Frame buffer = Memory.allocate(20);
@@ -126,8 +124,8 @@ public class G729Coder {
         byte[] pcm = Arrays.copyOfRange(wavByte, 44, wavByte.length);
 
         System.out.println("PCM audio len: " + pcm.length);
-
-        byte[] result = pcm2g729(pcm);
+        G729AEncoder encoder = new G729AEncoder();
+        byte[] result = pcm2g729(encoder,pcm);
 
         System.out.println("G729 encode len []: " + result.length);
         return result;
@@ -142,8 +140,8 @@ public class G729Coder {
     public static byte[] decodeG729(byte[] g729audio) {
 
         System.out.println("G729 decode to pcm len []: " + g729audio.length);
-
-        byte[] result = g7292pcm(g729audio);
+        G729ADecoder decoder = new G729ADecoder();
+        byte[] result = g7292pcm(decoder,g729audio);
 
         System.out.println("G729 decode to pcm len []: " + result.length);
         return result;
