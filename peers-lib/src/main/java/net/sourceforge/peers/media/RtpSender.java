@@ -96,7 +96,7 @@ public class RtpSender implements Runnable {
         rtpPacket.setSsrc(random.nextInt());
         int buf_size = Capture.BUFFER_SIZE / 2;
         if(codec.getPayloadType()== RFC3551.PAYLOAD_TYPE_G729){
-            buf_size = Capture.BUFFER_SIZE_G729 / 2;
+            buf_size = Capture.BUFFER_SIZE / 16;
         }
         byte[] buffer = new byte[buf_size];
         int timestamp = 0;

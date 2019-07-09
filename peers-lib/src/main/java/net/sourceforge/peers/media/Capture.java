@@ -30,7 +30,6 @@ public class Capture implements Runnable {
     
     public static final int SAMPLE_SIZE = 16;
     public static final int BUFFER_SIZE = SAMPLE_SIZE * 20;
-    public static final int BUFFER_SIZE_G729 = 20;
 
     private PipedOutputStream rawData;
     private boolean isStopped;
