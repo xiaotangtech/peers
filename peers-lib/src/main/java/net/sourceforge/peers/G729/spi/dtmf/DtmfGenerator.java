@@ -1,6 +1,6 @@
 package net.sourceforge.peers.G729.spi.dtmf;
 
-import net.sourceforge.peers.G729.MediaSource;
+import net.sourceforge.peers.G729.spi.MediaSource;
 
 public interface DtmfGenerator extends MediaSource {
     void addListener(DtmfGeneratorListener var1);

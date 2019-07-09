@@ -1,6 +1,6 @@
 package net.sourceforge.peers.G729.spi.player;
 
-import net.sourceforge.peers.G729.MediaSource;
+import net.sourceforge.peers.G729.spi.MediaSource;
 import net.sourceforge.peers.G729.spi.ResourceUnavailableException;
 import net.sourceforge.peers.G729.spi.listener.TooManyListenersException;
 

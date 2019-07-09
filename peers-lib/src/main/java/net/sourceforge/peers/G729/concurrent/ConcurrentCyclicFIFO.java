@@ -5,182 +5,156 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ConcurrentCyclicFIFO<E> {
-
-	static class Node<E> {
-		volatile E item;
-		Node<E> next;
-
-		Node(E x) {
-			item = x;
-		}
-	}
-
-	/** Current number of elements */
 	private final AtomicInteger count = new AtomicInteger(0);
-
-	/** Head of linked list */
-	private transient Node<E> head;
-
-	/** Tail of linked list */
-	private transient Node<E> last;
-
-	/** Lock held by take, poll, etc */
+	private transient ConcurrentCyclicFIFO.Node<E> head;
+	private transient ConcurrentCyclicFIFO.Node<E> last;
 	private final ReentrantLock takeLock = new ReentrantLock();
+	private final Condition notEmpty;
+	private final ReentrantLock putLock;
 
-	/** Wait queue for waiting takes */
-	private final Condition notEmpty = takeLock.newCondition();
-
-	/** Lock held by put, offer, etc */
-	private final ReentrantLock putLock = new ReentrantLock();
-
-	/**
-	 * Signals a waiting take. Called only from put/offer (which do not
-	 * otherwise ordinarily lock takeLock.)
-	 */
 	private void signalNotEmpty() {
-		final ReentrantLock takeLock = this.takeLock;
+		ReentrantLock takeLock = this.takeLock;
 		takeLock.lock();
+
 		try {
-			notEmpty.signal();
+			this.notEmpty.signal();
 		} finally {
 			takeLock.unlock();
 		}
+
 	}
 
-	/**
-	 * Creates a node and links it at end of queue.
-	 * 
-	 * @param x
-	 *            the item
-	 */
-	private void insert(Node<E> x) {
-		last = last.next = x;
+	private void insert(ConcurrentCyclicFIFO.Node<E> x) {
+		this.last = this.last.next = x;
 	}
 
-	/**
-	 * Removes a node from head of queue,
-	 * 
-	 * @return the node
-	 */
-	private Node<E> extract() {
-		Node<E> current = head;
-		head = head.next;
-
-		current.item = head.item;
-		head.item = null;
-
+	private ConcurrentCyclicFIFO.Node<E> extract() {
+		ConcurrentCyclicFIFO.Node<E> current = this.head;
+		this.head = this.head.next;
+		current.item = this.head.item;
+		this.head.item = null;
 		return current;
 	}
 
 	public ConcurrentCyclicFIFO() {
-		last = head = new Node<E>(null);
+		this.notEmpty = this.takeLock.newCondition();
+		this.putLock = new ReentrantLock();
+		this.last = this.head = new ConcurrentCyclicFIFO.Node((Object)null);
 	}
 
 	public int size() {
-		return count.get();
+		return this.count.get();
 	}
 
 	public boolean offer(E e) {
 		if (e == null) {
 			throw new NullPointerException();
-		}
+		} else {
+			AtomicInteger count = this.count;
+			boolean shouldSignal = false;
+			ReentrantLock putLock = this.putLock;
+			putLock.lock();
 
-		final AtomicInteger count = this.count;
+			try {
+				this.insert(new ConcurrentCyclicFIFO.Node(e));
+				shouldSignal = count.getAndIncrement() == 0;
+			} finally {
+				putLock.unlock();
+			}
 
-		boolean shouldSignal = false;
-		final ReentrantLock putLock = this.putLock;
-		putLock.lock();
-		try {
-			insert(new Node<E>(e));
-			shouldSignal = (count.getAndIncrement() == 0);
-		} finally {
-			putLock.unlock();
-		}
+			if (shouldSignal) {
+				this.signalNotEmpty();
+			}
 
-		if (shouldSignal) {
-			signalNotEmpty();
+			return !shouldSignal;
 		}
-		return !shouldSignal;
 	}
 
 	public E take() throws InterruptedException {
-		Node<E> x;
-		final AtomicInteger count = this.count;
-		final ReentrantLock takeLock = this.takeLock;
+		AtomicInteger count = this.count;
+		ReentrantLock takeLock = this.takeLock;
 		takeLock.lockInterruptibly();
+
+		ConcurrentCyclicFIFO.Node x;
 		try {
 			try {
-				while (count.get() == 0)
-					notEmpty.await();
-			} catch (InterruptedException ie) {
-				// propagate to a non-interrupted thread
-				notEmpty.signal();
-				throw ie;
+				while(count.get() == 0) {
+					this.notEmpty.await();
+				}
+			} catch (InterruptedException var8) {
+				this.notEmpty.signal();
+				throw var8;
 			}
 
-			x = extract();
+			x = this.extract();
 			if (count.getAndDecrement() > 1) {
-				notEmpty.signal();
+				this.notEmpty.signal();
 			}
 		} finally {
 			takeLock.unlock();
 		}
 
-		E result = x.item;
-
-		// temporary clearence
+		Object result = x.item;
 		x.item = null;
 		x.next = null;
-
-		return result;
+		return (E) result;
 	}
 
 	public E poll() {
-		final AtomicInteger count = this.count;
+		AtomicInteger count = this.count;
 		if (count.get() == 0) {
 			return null;
-		}
+		} else {
+			ConcurrentCyclicFIFO.Node<E> x = null;
+			ReentrantLock takeLock = this.takeLock;
+			takeLock.lock();
 
-		Node<E> x = null;
-		final ReentrantLock takeLock = this.takeLock;
-		takeLock.lock();
-
-		try {
-			if (count.get() > 0) {
-				x = extract();
-				if (count.getAndDecrement() > 1) {
-					notEmpty.signal();
+			try {
+				if (count.get() > 0) {
+					x = this.extract();
+					if (count.getAndDecrement() > 1) {
+						this.notEmpty.signal();
+					}
 				}
+			} finally {
+				takeLock.unlock();
 			}
-		} finally {
-			takeLock.unlock();
+
+			if (x != null) {
+				E result = x.item;
+				x.item = null;
+				x.next = null;
+				return result;
+			} else {
+				return null;
+			}
 		}
-
-		if (x != null) {
-			E result = x.item;
-
-			// temporary clearence
-			x.item = null;
-			x.next = null;
-
-			return result;
-		}
-
-		return null;
 	}
 
 	public void clear() {
-		putLock.lock();
-		takeLock.lock();
+		this.putLock.lock();
+		this.takeLock.lock();
 
 		try {
-			head.next = null;
-			assert head.item == null;
-			last = head;
-			count.set(0);
+			this.head.next = null;
+
+			assert this.head.item == null;
+
+			this.last = this.head;
+			this.count.set(0);
 		} finally {
-			takeLock.unlock();
-			putLock.unlock();
+			this.takeLock.unlock();
+			this.putLock.unlock();
+		}
+
+	}
+
+	static class Node<E> {
+		volatile E item;
+		ConcurrentCyclicFIFO.Node<E> next;
+
+		Node(E x) {
+			this.item = x;
 		}
 	}
 }

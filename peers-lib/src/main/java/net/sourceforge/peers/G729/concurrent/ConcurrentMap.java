@@ -4,16 +4,16 @@ import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ConcurrentMap<E> extends ConcurrentHashMap<Integer, E> {
-	
 	private static final long serialVersionUID = 8270100031373807057L;
 
-	@SuppressWarnings("unchecked")
-	public Iterator<Integer> keysIterator() {
-		return (Iterator<Integer>) keys();
+	public ConcurrentMap() {
 	}
 
-	@SuppressWarnings("unchecked")
+	public Iterator<Integer> keysIterator() {
+		return (Iterator)this.keys();
+	}
+
 	public Iterator<E> valuesIterator() {
-		return (Iterator<E>) elements();
+		return (Iterator)this.elements();
 	}
 }

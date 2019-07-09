@@ -1,8 +1,6 @@
 package net.sourceforge.peers.G729.spi;
 
 
-import net.sourceforge.peers.G729.Component;
-import net.sourceforge.peers.G729.ComponentType;
 import net.sourceforge.peers.G729.scheduler.PriorityQueueScheduler;
 
 public interface Endpoint {

@@ -1,6 +1,6 @@
 package net.sourceforge.peers.G729.spi.recorder;
 
-import net.sourceforge.peers.G729.MediaSink;
+import net.sourceforge.peers.G729.spi.MediaSink;
 import net.sourceforge.peers.G729.spi.listener.TooManyListenersException;
 
 import java.io.IOException;

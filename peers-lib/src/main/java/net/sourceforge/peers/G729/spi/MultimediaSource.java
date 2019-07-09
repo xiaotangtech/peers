@@ -1,6 +1,5 @@
 package net.sourceforge.peers.G729.spi;
 
-import net.sourceforge.peers.G729.MediaSource;
 import net.sourceforge.peers.G729.spi.dsp.Processor;
 
 import java.util.Collection;

@@ -1,4 +1,4 @@
-package net.sourceforge.peers.G729;
+package net.sourceforge.peers.G729.spi;
 
 public enum ComponentType {
     DTMF_DETECTOR(0),

@@ -1,4 +1,4 @@
-package net.sourceforge.peers.G729;
+package net.sourceforge.peers.G729.spi;
 
 import net.sourceforge.peers.G729.spi.memory.Frame;
 
