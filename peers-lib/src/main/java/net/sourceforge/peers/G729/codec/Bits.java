@@ -18,7 +18,6 @@ public class Bits {
     }
 
     public static void prm2bits_ld8k(int[] prm, short[] bits) {
-//        int prmp = 0;
         int bitsp = 0;
         bitsp = bitsp + 1;
         bits[bitsp] = 27425;

@@ -24,13 +24,12 @@ public class Pitch {
     }
 
     public static int lag_max(float[] signal, int signals, int l_frame, int lagmax, int lagmin, FloatPointer cor_max) {
-//        int p = 0;
+        int p = 0;
         int p_max = 0;
         float max = -1.0E38F;
 
         int i;
         float t0;
-        int p;
         for(i = lagmax; i >= lagmin; --i) {
             p = 0;
             int p1 = -i;
