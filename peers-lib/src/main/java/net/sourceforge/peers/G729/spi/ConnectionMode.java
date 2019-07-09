@@ -1,5 +1,6 @@
 package net.sourceforge.peers.G729.spi;
 
+
 public enum ConnectionMode {
     INACTIVE("inactive"),
     SEND_ONLY("sendonly"),
@@ -23,11 +24,11 @@ public enum ConnectionMode {
 
     public static final ConnectionMode fromDescription(String description) {
         if (description != null && !description.isEmpty()) {
-            ConnectionMode[] arr$ = values();
-            int len$ = arr$.length;
+            ConnectionMode[] var1 = values();
+            int var2 = var1.length;
 
-            for(int i$ = 0; i$ < len$; ++i$) {
-                ConnectionMode mode = arr$[i$];
+            for(int var3 = 0; var3 < var2; ++var3) {
+                ConnectionMode mode = var1[var3];
                 if (mode.description.equalsIgnoreCase(description)) {
                     return mode;
                 }

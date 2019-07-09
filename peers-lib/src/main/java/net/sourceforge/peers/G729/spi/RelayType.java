@@ -8,11 +8,11 @@ public enum RelayType {
     }
 
     public static final RelayType fromName(String name) {
-        RelayType[] arr$ = values();
-        int len$ = arr$.length;
+        RelayType[] var1 = values();
+        int var2 = var1.length;
 
-        for(int i$ = 0; i$ < len$; ++i$) {
-            RelayType relayType = arr$[i$];
+        for(int var3 = 0; var3 < var2; ++var3) {
+            RelayType relayType = var1[var3];
             if (relayType.name().equalsIgnoreCase(name)) {
                 return relayType;
             }
