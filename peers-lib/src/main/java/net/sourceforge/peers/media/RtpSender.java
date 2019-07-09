@@ -96,7 +96,7 @@ public class RtpSender implements Runnable {
         rtpPacket.setSsrc(random.nextInt());
         int buf_size = Capture.BUFFER_SIZE / 2;
         if(codec.getPayloadType()== RFC3551.PAYLOAD_TYPE_G729){
-            buf_size = Capture.BUFFER_SIZE_G729;
+            buf_size = 40;
         }
         byte[] buffer = new byte[buf_size];
         int timestamp = 0;
@@ -116,21 +116,21 @@ public class RtpSender implements Runnable {
                     // expect that the buffer is full
                     tempBytesRead = encodedData.read(buffer, numBytesRead,
                             buf_size - numBytesRead);
-                    logger.debug("RtpSender 遍历编码数据第【"+ tt++ +"】次；length："+tempBytesRead);
                     numBytesRead += tempBytesRead;
                 }
             } catch (IOException e) {
                 logger.error("input/output error", e);
                 return;
             }
-            byte[] trimmedBuffer = new byte[numBytesRead];
-            System.arraycopy(buffer, 0, trimmedBuffer, 0, numBytesRead);
-//            if (numBytesRead < buffer.length) {
-//                trimmedBuffer = new byte[numBytesRead];
-//                System.arraycopy(buffer, 0, trimmedBuffer, 0, numBytesRead);
-//            } else {
-//                trimmedBuffer = buffer;
-//            }
+            byte[] trimmedBuffer;
+//              = new byte[numBytesRead];
+//            System.arraycopy(buffer, 0, trimmedBuffer, 0, numBytesRead);
+            if (numBytesRead < buffer.length) {
+                trimmedBuffer = new byte[numBytesRead];
+                System.arraycopy(buffer, 0, trimmedBuffer, 0, numBytesRead);
+            } else {
+                trimmedBuffer = buffer;
+            }
             logger.debug("RtpSender 一次发送前数据length："+trimmedBuffer.length);
             if (mediaDebug) {
                 try {
