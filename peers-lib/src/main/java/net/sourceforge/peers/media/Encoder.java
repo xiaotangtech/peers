@@ -55,7 +55,11 @@ public abstract class Encoder implements Runnable {
         this.latch = latch;
         isStopped = false;
     }
-    
+
+    public Encoder() {
+
+    }
+
     public void run() {
         byte[] buffer;
         if (mediaDebug) {

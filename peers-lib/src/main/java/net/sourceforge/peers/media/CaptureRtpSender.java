@@ -70,8 +70,7 @@ public class CaptureRtpSender {
         }
         switch (codec.getPayloadType()) {
             case RFC3551.PAYLOAD_TYPE_G729:
-                encoder = new G729Encoder(rawDataInput, encodedDataOutput,
-                        mediaDebug, logger, peersHome, latch);
+                encoder = new G729Encoder(logger);
                 break;
             case RFC3551.PAYLOAD_TYPE_PCMU:
                 encoder = new PcmuEncoder(rawDataInput, encodedDataOutput,

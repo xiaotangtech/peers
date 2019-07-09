@@ -1,15 +1,12 @@
 package net.sourceforge.peers.media;
 
-import net.sourceforge.peers.g729.codec.G729AEncoder;
 import net.sourceforge.peers.Logger;
+import net.sourceforge.peers.g729.codec.G729AEncoder;
 import net.sourceforge.peers.g729.spi.memory.Frame;
 import net.sourceforge.peers.g729.spi.memory.Memory;
 
 import java.io.ByteArrayOutputStream;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
 import java.util.ArrayList;
-import java.util.concurrent.CountDownLatch;
 
 /**
  * Created by luxuedong
@@ -22,8 +19,10 @@ public class G729Encoder extends Encoder{
 
     private G729AEncoder encoder;
 
-    public G729Encoder(PipedInputStream rawData, PipedOutputStream encodedData, boolean mediaDebug, Logger logger, String peersHome, CountDownLatch latch) {
-        super(rawData, encodedData, mediaDebug, logger, peersHome, latch);
+//    PipedInputStream rawData, PipedOutputStream encodedData, boolean mediaDebug, Logger logger, String peersHome, CountDownLatch latch
+    public G729Encoder(Logger logger) {
+        super();
+//        super(rawData, encodedData, mediaDebug, logger, peersHome, latch);
         encoder = new G729AEncoder();
         this.logger=logger;
     }
