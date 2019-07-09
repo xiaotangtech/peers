@@ -31,7 +31,7 @@ public class G729Encoder extends Encoder{
     @Override
     public byte[] process(byte[] media) {
         logger.debug("+++++++++++++++++++PCM Encoder 2 G729 Before length:" + media.length);
-        byte[] bytes = encodeByte(media);
+        byte[] bytes = pcm2g729(media);
         logger.debug("+++++++++++++++++++PCM Encoder 2 G729 after length:" + bytes.length);
         return bytes;
     }
@@ -39,12 +39,12 @@ public class G729Encoder extends Encoder{
     public byte[] pcm2g729(byte[] data) {
         ByteArrayOutputStream dstBuffer = new ByteArrayOutputStream();
         try {
-            Frame buffer = Memory.allocate(320);
+            Frame buffer = Memory.allocate(160);
             byte[] src = buffer.getData();
             int readLen = 0;
             while (readLen < data.length) {
                 int remainLen = data.length - readLen;
-                int onceLen = 320 < remainLen ? 320 : remainLen;
+                int onceLen = 160 < remainLen ? 160 : remainLen;
                 System.arraycopy(data, readLen, src, 0, onceLen);
                 readLen += onceLen;
                 buffer.setLength(onceLen);
@@ -58,8 +58,6 @@ public class G729Encoder extends Encoder{
     }
 
     public byte[] encodeByte(byte[] bytes) {
-        logger.debug("+++++++++++++++++++G729Encoder before length:" + bytes.length);
-        G729AEncoder encoder = new G729AEncoder();
         byte[] bb = new byte[bytes.length / 16];
         ArrayList<Byte> list = new ArrayList<>();//没有解压的集合
         ArrayList<Byte> list2 = new ArrayList<>();//解压完的集合
@@ -79,7 +77,6 @@ public class G729Encoder extends Encoder{
         for (int i = 0; i < list2.size(); i++) {
             bb[i] = list2.get(i);
         }
-        logger.debug("-------------------G729Encoder after length:" + bb.length);
         return bb;
     }
 }
