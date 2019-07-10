@@ -96,7 +96,7 @@ public class RtpSender implements Runnable {
         rtpPacket.setSsrc(random.nextInt());
         int buf_size = Capture.BUFFER_SIZE / 2;
         if(codec.getPayloadType()== RFC3551.PAYLOAD_TYPE_G729){
-            buf_size = Capture.BUFFER_SIZE / 2;
+            buf_size = Capture.BUFFER_SIZE / 16;
         }
         byte[] buffer = new byte[buf_size];
         int timestamp = 0;
@@ -164,24 +164,28 @@ public class RtpSender implements Runnable {
                 firstTime = false;
                 continue;
             }
-            sleepTime = 19500000 - (System.nanoTime() - lastSentTime) + offset;
-            if (sleepTime > 0) {
-                logger.info("sleeptime " + sleepTime);
-                try {
-                    logger.info("sleep " + Math.round(sleepTime / 1000000f));
-                    Thread.sleep(Math.round(sleepTime / 1000000f));
-                } catch (InterruptedException e) {
-                    logger.error("Thread interrupted", e);
-                    return;
-                }
+            if(codec.getPayloadType()== RFC3551.PAYLOAD_TYPE_G729){
                 rtpSession.send(rtpPacket);
-                lastSentTime = System.nanoTime();
-                offset = 0;
-            } else {
-                rtpSession.send(rtpPacket);
-                lastSentTime = System.nanoTime();
-                if (sleepTime < -20000000) {
-                    offset = sleepTime + 20000000;
+            }else{
+                sleepTime = 19500000 - (System.nanoTime() - lastSentTime) + offset;
+                if (sleepTime > 0) {
+                    logger.info("sleeptime " + sleepTime);
+                    try {
+                        logger.info("sleep " + Math.round(sleepTime / 1000000f));
+                        Thread.sleep(Math.round(sleepTime / 1000000f));
+                    } catch (InterruptedException e) {
+                        logger.error("Thread interrupted", e);
+                        return;
+                    }
+                    rtpSession.send(rtpPacket);
+                    lastSentTime = System.nanoTime();
+                    offset = 0;
+                } else {
+                    rtpSession.send(rtpPacket);
+                    lastSentTime = System.nanoTime();
+                    if (sleepTime < -20000000) {
+                        offset = sleepTime + 20000000;
+                    }
                 }
             }
         }
