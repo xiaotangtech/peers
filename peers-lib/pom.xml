@@ -29,24 +29,13 @@
             <groupId>org.restcomm.media.core.codec</groupId>
             <artifactId>g729</artifactId>
             <version>8.0.0-21</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.logging.log4j</groupId>
-                    <artifactId>log4j-api</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.restcomm.media.core</groupId>
             <artifactId>spi</artifactId>
             <version>8.0.0-21</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.logging.log4j</groupId>
-                    <artifactId>log4j-api</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
+
     </dependencies>
 
     <!--<build>-->
@@ -64,4 +53,17 @@
 
     <!--</plugins>-->
     <!--</build>-->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
