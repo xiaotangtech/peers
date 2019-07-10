@@ -29,11 +29,23 @@
             <groupId>org.restcomm.media.core.codec</groupId>
             <artifactId>g729</artifactId>
             <version>8.0.0-21</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.restcomm.media.core</groupId>
             <artifactId>spi</artifactId>
             <version>8.0.0-21</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
