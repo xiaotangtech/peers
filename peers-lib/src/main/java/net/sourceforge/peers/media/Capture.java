@@ -77,10 +77,10 @@ public class Capture implements Runnable {
                 if (buffer == null) {
                     break;
                 }
-                if(payloadType== RFC3551.PAYLOAD_TYPE_G729){
+                if(payloadType == RFC3551.PAYLOAD_TYPE_G729){
                     result = concatByte(result, buffer);
                     if(result.length>=320){
-                        rawData.write(encoder.process(buffer));
+                        rawData.write(encoder.process(result));
                         // rawData.write(buffer);
                         rawData.flush();
                         result = new byte[0];
