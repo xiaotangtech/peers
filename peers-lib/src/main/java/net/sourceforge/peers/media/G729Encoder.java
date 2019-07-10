@@ -17,12 +17,15 @@ public class G729Encoder extends Encoder{
 
     private Logger logger;
 
+    private org.restcomm.media.core.codec.g729.Encoder encoderJ;
+
     private G729AEncoder encoder;
 
 //    PipedInputStream rawData, PipedOutputStream encodedData, boolean mediaDebug, Logger logger, String peersHome, CountDownLatch latch
     public G729Encoder(Logger logger) {
         super();
 //        super(rawData, encodedData, mediaDebug, logger, peersHome, latch);
+        encoderJ = new org.restcomm.media.core.codec.g729.Encoder();
         encoder = new G729AEncoder();
         this.logger=logger;
     }
@@ -30,9 +33,30 @@ public class G729Encoder extends Encoder{
     @Override
     public byte[] process(byte[] media) {
         logger.debug("+++++++++++++++++++PCM Encoder 2 G729 Before length:" + media.length);
-        byte[] bytes = pcm2g729(media);
+        byte[] bytes = pcm2g729J(media);
         logger.debug("+++++++++++++++++++PCM Encoder 2 G729 after length:" + bytes.length);
         return bytes;
+    }
+
+    public byte[] pcm2g729J(byte[] data) {
+        ByteArrayOutputStream dstBuffer = new ByteArrayOutputStream();
+        try {
+            org.restcomm.media.core.spi.memory.Frame buffer = org.restcomm.media.core.spi.memory.Memory.allocate(320);
+            byte[] src = buffer.getData();
+            int readLen = 0;
+            while (readLen < data.length) {
+                int remainLen = data.length - readLen;
+                int onceLen = 320 < remainLen ? 320 : remainLen;
+                System.arraycopy(data, readLen, src, 0, onceLen);
+                readLen += onceLen;
+                buffer.setLength(onceLen);
+                byte[] encodeBytes = encoderJ.process(buffer).getData();
+                dstBuffer.write(encodeBytes);
+            }
+        } catch (Exception e) {
+
+        }
+        return dstBuffer.toByteArray();
     }
 
     public byte[] pcm2g729(byte[] data) {

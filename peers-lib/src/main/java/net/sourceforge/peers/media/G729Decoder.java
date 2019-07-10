@@ -18,17 +18,43 @@ public class G729Decoder extends Decoder {
 
     private G729ADecoder decoder;
 
+    private org.restcomm.media.core.codec.g729.Decoder decoderJ;
+
+
     public G729Decoder(Logger logger) {
         decoder = new G729ADecoder();
+        decoderJ = new org.restcomm.media.core.codec.g729.Decoder();
         this.logger = logger;
     }
 
     @Override
     public byte[] process(byte[] media) {
         logger.debug("-----------------G729 Decoder 2 PCM Before length:" + media.length);
-        byte[] g7292pcm = g7292pcm(media);
+        byte[] g7292pcm = g7292pcmJ(media);
         logger.debug("-----------------G729 Decoder 2 PCM After length:" + g7292pcm.length);
         return g7292pcm;
+    }
+
+    public byte[] g7292pcmJ(byte[] data) {
+
+        ByteArrayOutputStream dstBuffer = new ByteArrayOutputStream();
+        try {
+            org.restcomm.media.core.spi.memory.Frame buffer = org.restcomm.media.core.spi.memory.Memory.allocate(20);
+            byte[] src = buffer.getData();
+            int readLen = 0;
+            while (readLen < data.length) {
+                int remainLen = data.length - readLen;
+                int onceLen = 20 < remainLen ? 20 : remainLen;
+                System.arraycopy(data, readLen, src, 0, onceLen);
+                readLen += onceLen;
+                buffer.setLength(onceLen);
+                byte[] encodeBytes = decoderJ.process(buffer).getData();
+                dstBuffer.write(encodeBytes);
+            }
+        } catch (Exception e) {
+
+        }
+        return dstBuffer.toByteArray();
     }
 
     public byte[] g7292pcm(byte[] data) {
