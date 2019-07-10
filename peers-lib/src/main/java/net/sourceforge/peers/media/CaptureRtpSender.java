@@ -86,7 +86,7 @@ public class CaptureRtpSender {
                 rawDataInput.close();
                 throw new RuntimeException("unknown payload type");
         }
-        capture = new Capture(rawDataOutput, soundSource, logger, latch, encoder);
+        capture = new Capture(rawDataOutput, soundSource, logger, latch, encoder,codec.getPayloadType());
         rtpSender = new RtpSender(rawDataInput, rtpSession, mediaDebug,
                 codec, logger, peersHome, latch);
     }
