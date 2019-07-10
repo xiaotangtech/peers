@@ -28,7 +28,7 @@ import net.sourceforge.peers.rtp.RFC3551;
 
 
 public class Capture implements Runnable {
-    
+
     public static final int SAMPLE_SIZE = 16;
     public static final int BUFFER_SIZE = SAMPLE_SIZE * 20;
 
@@ -39,21 +39,17 @@ public class Capture implements Runnable {
     private CountDownLatch latch;
     private Encoder encoder;
     private int payloadType;
-    
+
     public Capture(PipedOutputStream rawData, SoundSource soundSource,
-            Logger logger, CountDownLatch latch, Encoder encoder,int payloadType) {
+                   Logger logger, CountDownLatch latch, Encoder encoder, int payloadType) {
         this.rawData = rawData;
         this.soundSource = soundSource;
         this.logger = logger;
         this.latch = latch;
         this.encoder = encoder;
         isStopped = false;
-        this.payloadType=payloadType;
+        this.payloadType = payloadType;
     }
-//    byte[] result = new byte[0];
-//        while(result.length<320){
-//        result = concatByte(result, media);
-//    }
 
     public byte[] concatByte(byte[] b1, byte[] b2) {
         byte[] concatByte = new byte[b1.length + b2.length];
@@ -77,29 +73,29 @@ public class Capture implements Runnable {
                 if (buffer == null) {
                     break;
                 }
-                if(payloadType == RFC3551.PAYLOAD_TYPE_G729){
+                if (payloadType == RFC3551.PAYLOAD_TYPE_G729) {
                     result = concatByte(result, buffer);
-                    if(result.length==320){
+                    if (result.length == 320) {
                         rawData.write(encoder.process(result));
                         rawData.flush();
                         result = new byte[0];
                     }
-                    if(result.length>320){
+                    if (result.length > 320) {
                         byte[] temp = new byte[320];
                         System.arraycopy(result, 0, temp, 0, 320);
                         rawData.write(encoder.process(temp));
                         rawData.flush();
-                        byte[] temp2 = new byte[result.length-320];
-                        System.arraycopy(result, 320, temp2, 0, result.length-320);
+                        byte[] temp2 = new byte[result.length - 320];
+                        System.arraycopy(result, 320, temp2, 0, result.length - 320);
                         result = new byte[0];
                         concatByte(result, temp2);
                     }
-                    if(buffer.length<=0&&result.length>0){
+                    if (buffer.length <= 0 && result.length > 0) {
                         rawData.write(encoder.process(result));
                         rawData.flush();
                     }
 
-                }else {
+                } else {
                     rawData.write(encoder.process(buffer));
                     rawData.flush();
                 }

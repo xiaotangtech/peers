@@ -80,7 +80,6 @@ public class CaptureRtpSender {
                 encoder = new PcmaEncoder(rawDataInput, encodedDataOutput,
                         mediaDebug, logger, peersHome, latch);
                 break;
-
             default:
                 encodedDataInput.close();
                 rawDataInput.close();

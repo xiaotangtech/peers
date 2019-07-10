@@ -50,10 +50,10 @@ public class RtpSender implements Runnable {
     private Logger logger;
     private String peersHome;
     private CountDownLatch latch;
-    
+
     public RtpSender(PipedInputStream encodedData, RtpSession rtpSession,
-            boolean mediaDebug, Codec codec, Logger logger, String peersHome,
-            CountDownLatch latch) {
+                     boolean mediaDebug, Codec codec, Logger logger, String peersHome,
+                     CountDownLatch latch) {
         this.encodedData = encodedData;//编码后的数据
         this.rtpSession = rtpSession;
         this.mediaDebug = mediaDebug;
@@ -69,11 +69,11 @@ public class RtpSender implements Runnable {
     public void run() {
         if (mediaDebug) {
             SimpleDateFormat simpleDateFormat =
-                new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+                    new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
             String date = simpleDateFormat.format(new Date());
             String fileName = peersHome + File.separator
-                + AbstractSoundManager.MEDIA_DIR + File.separator + date
-                + "_rtp_sender.input";
+                    + AbstractSoundManager.MEDIA_DIR + File.separator + date
+                    + "_rtp_sender.input";
             try {
                 logger.info("out put file:");
                 logger.info(fileName);
@@ -95,7 +95,7 @@ public class RtpSender implements Runnable {
         rtpPacket.setSequenceNumber(sequenceNumber);
         rtpPacket.setSsrc(random.nextInt());
         int buf_size = Capture.BUFFER_SIZE / 2;
-        if(codec.getPayloadType()== RFC3551.PAYLOAD_TYPE_G729){
+        if (codec.getPayloadType() == RFC3551.PAYLOAD_TYPE_G729) {
             buf_size = Capture.BUFFER_SIZE / 16;
         }
         byte[] buffer = new byte[buf_size];
@@ -111,7 +111,6 @@ public class RtpSender implements Runnable {
         while (!isStopped) {
             numBytesRead = 0;
             try {
-                int tt = 0;
                 while (!isStopped && numBytesRead < buf_size) {
                     // expect that the buffer is full
                     tempBytesRead = encodedData.read(buffer, numBytesRead,
@@ -129,7 +128,7 @@ public class RtpSender implements Runnable {
             } else {
                 trimmedBuffer = buffer;
             }
-            logger.debug("RtpSender 一次发送前数据length："+trimmedBuffer.length);
+            logger.debug("RtpSender 一次发送前数据length：" + trimmedBuffer.length);
             if (mediaDebug) {
                 try {
                     rtpSenderInput.write(trimmedBuffer); // TODO use classpath
@@ -152,11 +151,11 @@ public class RtpSender implements Runnable {
                 }
                 rtpPacket.setData(trimmedBuffer);
             }
-            
+
             rtpPacket.setSequenceNumber(sequenceNumber++);
             if (rtpPacket.isIncrementTimeStamp()) {
-                    timestamp += buf_size;
-                }
+                timestamp += buf_size;
+            }
             rtpPacket.setTimestamp(timestamp);
             if (firstTime) {
                 rtpSession.send(rtpPacket);
@@ -164,30 +163,30 @@ public class RtpSender implements Runnable {
                 firstTime = false;
                 continue;
             }
-            if(codec.getPayloadType()== RFC3551.PAYLOAD_TYPE_G729){
+//            if(codec.getPayloadType()== RFC3551.PAYLOAD_TYPE_G729){
+//                rtpSession.send(rtpPacket);
+//            }else{
+            sleepTime = 19500000 - (System.nanoTime() - lastSentTime) + offset;
+            if (sleepTime > 0) {
+                logger.info("sleeptime " + sleepTime);
+                try {
+                    logger.info("sleep " + Math.round(sleepTime / 1000000f));
+                    Thread.sleep(Math.round(sleepTime / 1000000f));
+                } catch (InterruptedException e) {
+                    logger.error("Thread interrupted", e);
+                    return;
+                }
                 rtpSession.send(rtpPacket);
-            }else{
-                sleepTime = 19500000 - (System.nanoTime() - lastSentTime) + offset;
-                if (sleepTime > 0) {
-                    logger.info("sleeptime " + sleepTime);
-                    try {
-                        logger.info("sleep " + Math.round(sleepTime / 1000000f));
-                        Thread.sleep(Math.round(sleepTime / 1000000f));
-                    } catch (InterruptedException e) {
-                        logger.error("Thread interrupted", e);
-                        return;
-                    }
-                    rtpSession.send(rtpPacket);
-                    lastSentTime = System.nanoTime();
-                    offset = 0;
-                } else {
-                    rtpSession.send(rtpPacket);
-                    lastSentTime = System.nanoTime();
-                    if (sleepTime < -20000000) {
-                        offset = sleepTime + 20000000;
-                    }
+                lastSentTime = System.nanoTime();
+                offset = 0;
+            } else {
+                rtpSession.send(rtpPacket);
+                lastSentTime = System.nanoTime();
+                if (sleepTime < -20000000) {
+                    offset = sleepTime + 20000000;
                 }
             }
+//            }
         }
         if (mediaDebug) {
             try {
