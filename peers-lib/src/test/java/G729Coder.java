@@ -1,9 +1,5 @@
-import net.sourceforge.peers.G729.codec.G729ADecoder;
-import net.sourceforge.peers.G729.codec.G729AEncoder;
-import net.sourceforge.peers.G729.spi.memory.Frame;
-import net.sourceforge.peers.G729.spi.memory.Memory;
-import org.restcomm.media.core.codec.g729.Decoder;
-import org.restcomm.media.core.codec.g729.Encoder;
+import org.restcomm.media.spi.memory.Frame;
+import org.restcomm.media.spi.memory.Memory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
@@ -13,7 +9,6 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -22,71 +17,8 @@ import java.util.Arrays;
  */
 public class G729Coder {
 
-    public static byte[] g7292pcmJ(org.restcomm.media.core.codec.g729.Decoder decoder, byte[] data) {
+    public static byte[] g7292pcmJ(org.restcomm.media.codec.g729.Decoder decoder, byte[] data) {
 
-        ByteArrayOutputStream dstBuffer = new ByteArrayOutputStream();
-        try {
-            org.restcomm.media.core.spi.memory.Frame buffer = org.restcomm.media.core.spi.memory.Memory.allocate(20);
-            byte[] src = buffer.getData();
-            int readLen = 0;
-            while (readLen < data.length) {
-                int remainLen = data.length - readLen;
-                int onceLen = 20 < remainLen ? 20 : remainLen;
-                System.arraycopy(data, readLen, src, 0, onceLen);
-                readLen += onceLen;
-                buffer.setLength(onceLen);
-                byte[] encodeBytes = decoder.process(buffer).getData();
-                dstBuffer.write(encodeBytes);
-            }
-        } catch (Exception e) {
-
-        }
-        return dstBuffer.toByteArray();
-    }
-
-    public static byte[] pcm2g729J(org.restcomm.media.core.codec.g729.Encoder encoder,byte[] data) {
-        ByteArrayOutputStream dstBuffer = new ByteArrayOutputStream();
-        try {
-            org.restcomm.media.core.spi.memory.Frame buffer = org.restcomm.media.core.spi.memory.Memory.allocate(320);
-            byte[] src = buffer.getData();
-            int readLen = 0;
-            while (readLen < data.length) {
-                int remainLen = data.length - readLen;
-                int onceLen = 320 < remainLen ? 320 : remainLen;
-                System.arraycopy(data, readLen, src, 0, onceLen);
-                readLen += onceLen;
-                buffer.setLength(onceLen);
-                byte[] encodeBytes = encoder.process(buffer).getData();
-                dstBuffer.write(encodeBytes);
-            }
-        } catch (Exception e) {
-
-        }
-        return dstBuffer.toByteArray();
-    }
-
-    public static byte[] pcm2g729(G729AEncoder encoder,byte[] data) {
-        ByteArrayOutputStream dstBuffer = new ByteArrayOutputStream();
-        try {
-            Frame buffer = Memory.allocate(320);
-            byte[] src = buffer.getData();
-            int readLen = 0;
-            while (readLen < data.length) {
-                int remainLen = data.length - readLen;
-                int onceLen = 320 < remainLen ? 320 : remainLen;
-                System.arraycopy(data, readLen, src, 0, onceLen);
-                readLen += onceLen;
-                buffer.setLength(onceLen);
-                byte[] encodeBytes = encoder.process(buffer).getData();
-                dstBuffer.write(encodeBytes);
-            }
-        } catch (Exception e) {
-
-        }
-        return dstBuffer.toByteArray();
-    }
-
-    public static byte[] g7292pcm(G729ADecoder decoder,byte[] data) {
         ByteArrayOutputStream dstBuffer = new ByteArrayOutputStream();
         try {
             Frame buffer = Memory.allocate(20);
@@ -107,48 +39,71 @@ public class G729Coder {
         return dstBuffer.toByteArray();
     }
 
-    public static byte[] encodeByte(byte[] bytes) {
-        G729AEncoder encoder = new G729AEncoder();
-        byte[] bb = new byte[bytes.length / 16];
-        ArrayList<Byte> list = new ArrayList<>();//没有解压的集合
-        ArrayList<Byte> list2 = new ArrayList<>();//解压完的集合
-        for (int i = 0; i < bytes.length; i++) {
-            list.add(bytes[i]);//为集合添加数据
-        }
-        for (int i = 0; i < list.size() / 160; i++) {
-            byte[] b = new byte[160];//创建160为基准的小byte【】
-            for (int j = 0; j < 160; j++) {
-                b[j] = list.get(i * 160 + j);
+    public static byte[] pcm2g729J(org.restcomm.media.codec.g729.Encoder encoder,byte[] data) {
+        ByteArrayOutputStream dstBuffer = new ByteArrayOutputStream();
+        try {
+            Frame buffer = Memory.allocate(320);
+            byte[] src = buffer.getData();
+            int readLen = 0;
+            while (readLen < data.length) {
+                int remainLen = data.length - readLen;
+                int onceLen = 320 < remainLen ? 320 : remainLen;
+                System.arraycopy(data, readLen, src, 0, onceLen);
+                readLen += onceLen;
+                buffer.setLength(onceLen);
+                byte[] encodeBytes = encoder.process(buffer).getData();
+                dstBuffer.write(encodeBytes);
             }
-            byte[] process = encoder.process(b);
-            for (int j = 0; j < process.length; j++) {
-                list2.add(process[j]);
-            }
+        } catch (Exception e) {
+
         }
-        for (int i = 0; i < list2.size(); i++) {
-            bb[i] = list2.get(i);
-        }
-        return bb;
+        return dstBuffer.toByteArray();
     }
 
-    public static byte[] decodeByte(byte[] bytes) {
-        G729ADecoder decoder = new G729ADecoder();
-        byte[] bb = new byte[bytes.length * 16];
-        ArrayList<Byte> list = new ArrayList<>();
-        for (int i = 0; i < bytes.length / 10; i++) {
-            byte[] b = {bytes[i * 10], bytes[1 + i * 10], bytes[2 + i * 10], bytes[3 + i * 10], bytes[4 + i * 10], bytes[5 + i * 10], bytes[6 + i * 10], bytes[7 + i * 10], bytes[8 + i * 10], bytes[9 + i * 10]};
-            byte[] process = decoder.process(b);
-            ArrayList<Byte> arr = new ArrayList<>();
-            for (int j = 0; j < process.length; j++) {
-                arr.add(process[j]);
-            }
-            list.addAll(arr);
-        }
-        for (int i = 0; i < list.size(); i++) {
-            bb[i] = list.get(i);
-        }
-        return bb;
-    }
+
+
+//    public static byte[] encodeByte(byte[] bytes) {
+//        G729AEncoder encoder = new G729AEncoder();
+//        byte[] bb = new byte[bytes.length / 16];
+//        ArrayList<Byte> list = new ArrayList<>();//没有解压的集合
+//        ArrayList<Byte> list2 = new ArrayList<>();//解压完的集合
+//        for (int i = 0; i < bytes.length; i++) {
+//            list.add(bytes[i]);//为集合添加数据
+//        }
+//        for (int i = 0; i < list.size() / 160; i++) {
+//            byte[] b = new byte[160];//创建160为基准的小byte【】
+//            for (int j = 0; j < 160; j++) {
+//                b[j] = list.get(i * 160 + j);
+//            }
+//            byte[] process = encoder.process(b);
+//            for (int j = 0; j < process.length; j++) {
+//                list2.add(process[j]);
+//            }
+//        }
+//        for (int i = 0; i < list2.size(); i++) {
+//            bb[i] = list2.get(i);
+//        }
+//        return bb;
+//    }
+//
+//    public static byte[] decodeByte(byte[] bytes) {
+//        G729ADecoder decoder = new G729ADecoder();
+//        byte[] bb = new byte[bytes.length * 16];
+//        ArrayList<Byte> list = new ArrayList<>();
+//        for (int i = 0; i < bytes.length / 10; i++) {
+//            byte[] b = {bytes[i * 10], bytes[1 + i * 10], bytes[2 + i * 10], bytes[3 + i * 10], bytes[4 + i * 10], bytes[5 + i * 10], bytes[6 + i * 10], bytes[7 + i * 10], bytes[8 + i * 10], bytes[9 + i * 10]};
+//            byte[] process = decoder.process(b);
+//            ArrayList<Byte> arr = new ArrayList<>();
+//            for (int j = 0; j < process.length; j++) {
+//                arr.add(process[j]);
+//            }
+//            list.addAll(arr);
+//        }
+//        for (int i = 0; i < list.size(); i++) {
+//            bb[i] = list.get(i);
+//        }
+//        return bb;
+//    }
 
     public static void main(String[] args) throws IOException {
 
@@ -169,7 +124,7 @@ public class G729Coder {
         byte[] pcm = Arrays.copyOfRange(wavByte, 44, wavByte.length);
 
         System.out.println("PCM audio len: " + pcm.length);
-        org.restcomm.media.core.codec.g729.Encoder encoder = new Encoder();
+        org.restcomm.media.codec.g729.Encoder encoder = new org.restcomm.media.codec.g729.Encoder();
         byte[] result = pcm2g729J(encoder,pcm);
 
         System.out.println("G729 encode len []: " + result.length);
@@ -185,8 +140,7 @@ public class G729Coder {
     public static byte[] decodeG729(byte[] g729audio) {
 
         System.out.println("G729 decode to pcm len []: " + g729audio.length);
-//        G729ADecoder decoder = new G729ADecoder();
-        org.restcomm.media.core.codec.g729.Decoder decoder = new Decoder();
+        org.restcomm.media.codec.g729.Decoder decoder = new org.restcomm.media.codec.g729.Decoder();
         byte[] result = g7292pcmJ(decoder,g729audio);
 
         System.out.println("G729 decode to pcm len []: " + result.length);
