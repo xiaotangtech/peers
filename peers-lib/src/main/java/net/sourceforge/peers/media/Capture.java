@@ -75,18 +75,18 @@ public class Capture implements Runnable {
                 }
                 if (payloadType == RFC3551.PAYLOAD_TYPE_G729) {
                     result = concatByte(result, buffer);
-                    if (result.length == 160) {
+                    if (result.length == 640) {
                         rawData.write(encoder.process(result));
                         rawData.flush();
                         result = new byte[0];
                     }
-                    if (result.length > 160) {
-                        byte[] temp = new byte[160];
-                        System.arraycopy(result, 0, temp, 0, 160);
+                    if (result.length > 640) {
+                        byte[] temp = new byte[640];
+                        System.arraycopy(result, 0, temp, 0, 640);
                         rawData.write(encoder.process(temp));
                         rawData.flush();
-                        byte[] temp2 = new byte[result.length - 160];
-                        System.arraycopy(result, 160, temp2, 0, result.length - 160);
+                        byte[] temp2 = new byte[result.length - 640];
+                        System.arraycopy(result, 640, temp2, 0, result.length - 640);
                         result = new byte[0];
                         concatByte(result, temp2);
                     }
