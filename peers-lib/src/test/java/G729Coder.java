@@ -62,28 +62,16 @@ public class G729Coder {
 
 
 
-//    public static byte[] encodeByte(byte[] bytes) {
-//        G729AEncoder encoder = new G729AEncoder();
-//        byte[] bb = new byte[bytes.length / 16];
-//        ArrayList<Byte> list = new ArrayList<>();//没有解压的集合
-//        ArrayList<Byte> list2 = new ArrayList<>();//解压完的集合
-//        for (int i = 0; i < bytes.length; i++) {
-//            list.add(bytes[i]);//为集合添加数据
+//    public byte[] encodePcm2G729(byte[] src){
+//        byte[] result = new byte[src.length / 16];
+//
+//        for(int i = 0;i<src.length/160;i++){
+//            byte[] temp = new byte[160];
+//            System.arraycopy(src, i*160, temp, 0, 160);
+//            byte[] process = encoder.process(temp);//10
+//            System.arraycopy(process, 0,result , i*10, (i+1)*10);
 //        }
-//        for (int i = 0; i < list.size() / 160; i++) {
-//            byte[] b = new byte[160];//创建160为基准的小byte【】
-//            for (int j = 0; j < 160; j++) {
-//                b[j] = list.get(i * 160 + j);
-//            }
-//            byte[] process = encoder.process(b);
-//            for (int j = 0; j < process.length; j++) {
-//                list2.add(process[j]);
-//            }
-//        }
-//        for (int i = 0; i < list2.size(); i++) {
-//            bb[i] = list2.get(i);
-//        }
-//        return bb;
+//        return result;
 //    }
 //
 //    public static byte[] decodeByte(byte[] bytes) {

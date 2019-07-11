@@ -27,32 +27,34 @@ public class G729Encoder extends Encoder{
     public byte[] process(byte[] media) {
         logger.debug("+++++++++++++++++++PCM Encoder To G729 Before length:" + media.length);
 //        byte[] bytes = pcm2g729(media);
-        byte[] bytes = encodeByte(media);
+        byte[] bytes = encodePcm2G729(media);
         logger.debug("+++++++++++++++++++PCM Encoder To G729 after length:" + bytes.length);
         return bytes;
     }
 
-    public byte[] encodeByte(byte[] bytes) {
-        byte[] bb = new byte[bytes.length / 16];
-        ArrayList<Byte> list = new ArrayList<>();//没有解压的集合
-        ArrayList<Byte> list2 = new ArrayList<>();//解压完的集合
-        for (int i = 0; i < bytes.length; i++) {
-            list.add(bytes[i]);//为集合添加数据
+
+    public byte[] encodePcm2G729(byte[] src){
+        byte[] result = new byte[src.length / 16];
+
+        for(int i = 0;i<src.length/160;i++){
+            byte[] temp = new byte[160];
+            System.arraycopy(src, i*160, temp, 0, 160);
+            byte[] process = encoder.process(temp);//10
+            System.arraycopy(process, 0,result , i*10, (i+1)*10);
         }
-        for (int i = 0; i < list.size() / 160; i++) {
-            byte[] b = new byte[160];//创建160为基准的小byte【】
-            for (int j = 0; j < 160; j++) {
-                b[j] = list.get(i * 160 + j);
+        return result;
+    }
+
+    public byte[] concatByte(byte[] b1, byte[] b2) {
+        byte[] concatByte = new byte[b1.length + b2.length];
+        for (int i = 0; i < concatByte.length; i++) {
+            if (i < b1.length) {
+                concatByte[i] = b1[i];
+            } else {
+                concatByte[i] = b2[i - b1.length];
             }
-            byte[] process = encoder.process(b);
-            for (int j = 0; j < process.length; j++) {
-                list2.add(process[j]);
-            }
         }
-        for (int i = 0; i < list2.size(); i++) {
-            bb[i] = list2.get(i);
-        }
-        return bb;
+        return concatByte;
     }
 
     public byte[] pcm2g729(byte[] data) {
