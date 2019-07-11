@@ -99,6 +99,7 @@ public class Capture implements Runnable {
                     try{
                         logger.info("buffer size=" + buffer.length);
                     if(result.length > 0){
+                        logger.info("result size=" + result.length);
                         try {
                             tmp1 = new byte[result.length + buffer.length];
                             System.arraycopy(result, 0, tmp1, 0, result.length);
