@@ -123,6 +123,8 @@ public class Capture implements Runnable {
                         }else{
                             result = new byte[0];
                         }
+                    }else if(tmp1.length < tmp.length){
+                        result = tmp1;
                     }else{
                         tmp = tmp1;
                         rawData.write(encoder.process(tmp));
