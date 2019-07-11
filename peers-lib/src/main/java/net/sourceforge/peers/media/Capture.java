@@ -74,26 +74,67 @@ public class Capture implements Runnable {
                     break;
                 }
                 if (payloadType == RFC3551.PAYLOAD_TYPE_G729) {
-                    result = concatByte(result, buffer);
-                    if (result.length == 320) {
-                        rawData.write(encoder.process(result));
-                        rawData.flush();
-                        result = new byte[0];
+                    // result = concatByte(result, buffer);
+                    // if (result.length == 320) {
+                    //     rawData.write(encoder.process(result));
+                    //     rawData.flush();
+                    //     result = new byte[0];
+                    // }
+                    // if (result.length > 320) {
+                    //     byte[] temp = new byte[320];
+                    //     System.arraycopy(result, 0, temp, 0, 320);
+                    //     rawData.write(encoder.process(temp));
+                    //     rawData.flush();
+                    //     byte[] temp2 = new byte[result.length - 320];
+                    //     System.arraycopy(result, 320, temp2, 0, result.length - 320);
+                    //     result = new byte[0];
+                    //     concatByte(result, temp2);
+                    // }
+                    // if (buffer.length <= 0 && result.length > 0) {
+                    //     rawData.write(encoder.process(result));
+                    //     rawData.flush();
+                    // }
+                    byte[] tmp = new byte[160];
+                    byte[] tmp1 = new byte[0];
+                    try{
+                        
+                    if(result.length > 0){
+                        try {
+                            tmp1 = new byte[result.length + buffer.length];
+                            System.arraycopy(result, 0, tmp1, 0, result.length);
+                            System.arraycopy(buffer, 0, tmp1, result.length, buffer.length);
+
+                            result = new byte[buffer.length - 160 + result.length];
+                            System.arraycopy(buffer, 160 - result.length, result, 0, result.length);
+                        } catch (Exception e) {
+                            logger.error("encode error", e);
+                        }
+                        // System.exit(0);
+                    }else{
+                        tmp1 = new byte[buffer.length];
+                        System.arraycopy(buffer, 0, tmp1, 0, buffer.length);
                     }
-                    if (result.length > 320) {
-                        byte[] temp = new byte[320];
-                        System.arraycopy(result, 0, temp, 0, 320);
-                        rawData.write(encoder.process(temp));
+                    if(tmp1.length > tmp.length){
+                        for(int i = 0; i < tmp1.length / tmp.length; i++){
+                            System.arraycopy(tmp1, i * tmp.length, tmp, 0, tmp.length);
+                            rawData.write(encoder.process(tmp));
+                            rawData.flush();
+                        }
+                        if(tmp1.length % tmp.length > 0){
+                            result = new byte[tmp1.length % tmp.length];
+                            System.arraycopy(tmp1, tmp1.length - result.length, result, 0, result.length);
+                        }else{
+                            result = new byte[0];
+                        }
+                    }else{
+                        tmp = tmp1;
+                        rawData.write(encoder.process(tmp));
                         rawData.flush();
-                        byte[] temp2 = new byte[result.length - 320];
-                        System.arraycopy(result, 320, temp2, 0, result.length - 320);
-                        result = new byte[0];
-                        concatByte(result, temp2);
                     }
-                    if (buffer.length <= 0 && result.length > 0) {
-                        rawData.write(encoder.process(result));
-                        rawData.flush();
-                    }
+                }catch(Exception e){
+                    logger.error("encode error",e);
+                }
+
 
                 } else {
                     rawData.write(encoder.process(buffer));
