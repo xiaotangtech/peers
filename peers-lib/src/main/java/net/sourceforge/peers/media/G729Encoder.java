@@ -40,7 +40,7 @@ public class G729Encoder extends Encoder{
             byte[] temp = new byte[160];
             System.arraycopy(src, i*160, temp, 0, 160);
             byte[] process = encoder.process(temp);//10
-            System.arraycopy(process, 0,result , i*10, (i+1)*10);
+            System.arraycopy(process, 0,result , i*10, 10);
         }
         return result;
     }
