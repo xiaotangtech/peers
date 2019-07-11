@@ -45,23 +45,24 @@ public class G729Encoder extends Encoder{
     }
 
     public byte[] pcm2g729(byte[] data) {
-        ByteArrayOutputStream dstBuffer = new ByteArrayOutputStream();
-        try {
-            Frame buffer = Memory.allocate(320);
-            byte[] src = buffer.getData();
-            int readLen = 0;
-            while (readLen < data.length) {
-                int remainLen = data.length - readLen;
-                int onceLen = 320 < remainLen ? 320 : remainLen;
-                System.arraycopy(data, readLen, src, 0, onceLen);
-                readLen += onceLen;
-                buffer.setLength(onceLen);
-                byte[] encodeBytes = encoder.process(buffer).getData();
-                dstBuffer.write(encodeBytes);
-            }
-        } catch (Exception e) {
+        // ByteArrayOutputStream dstBuffer = new ByteArrayOutputStream();
+        // try {
+        //     Frame buffer = Memory.allocate(320);
+        //     byte[] src = buffer.getData();
+        //     int readLen = 0;
+        //     while (readLen < data.length) {
+        //         int remainLen = data.length - readLen;
+        //         int onceLen = 320 < remainLen ? 320 : remainLen;
+        //         System.arraycopy(data, readLen, src, 0, onceLen);
+        //         readLen += onceLen;
+        //         buffer.setLength(onceLen);
+        //         byte[] encodeBytes = encoder.process(buffer).getData();
+        //         dstBuffer.write(encodeBytes);
+        //     }
+        // } catch (Exception e) {
 
-        }
-        return dstBuffer.toByteArray();
+        // }
+        // return dstBuffer.toByteArray();
+        return encoder.process(data);
     }
 }
