@@ -25,9 +25,23 @@ public class G729Encoder extends Encoder{
     @Override
     public byte[] process(byte[] media) {
         logger.debug("+++++++++++++++++++PCM Encoder To G729 Before length:" + media.length);
-        byte[] bytes = pcm2g729(media);
+//        byte[] bytes = pcm2g729(media);
+        byte[] bytes = encodePcm2G729(media);
         logger.debug("+++++++++++++++++++PCM Encoder To G729 after length:" + bytes.length);
         return bytes;
+    }
+
+
+    public byte[] encodePcm2G729(byte[] src){
+        byte[] result = new byte[src.length / 16];
+
+        for(int i = 0;i<src.length/160;i++){
+            byte[] temp = new byte[160];
+            System.arraycopy(src, i*160, temp, 0, 160);
+            byte[] process = encoder.process(temp);//10
+            System.arraycopy(process, 0,result , i*10, 10);
+        }
+        return result;
     }
 
     public byte[] pcm2g729(byte[] data) {
