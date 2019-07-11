@@ -97,7 +97,7 @@ public class Capture implements Runnable {
                     byte[] tmp = new byte[160];
                     byte[] tmp1 = new byte[0];
                     try{
-                        
+                        logger.info("buffer size=" + buffer.length);
                     if(result.length > 0){
                         try {
                             tmp1 = new byte[result.length + buffer.length];
@@ -115,8 +115,8 @@ public class Capture implements Runnable {
                         for(int i = 0; i < tmp1.length / tmp.length; i++){
                             System.arraycopy(tmp1, i * tmp.length, tmp, 0, tmp.length);
                             rawData.write(encoder.process(tmp));
-                            rawData.flush();
                         }
+                        rawData.flush();
                         if(tmp1.length % tmp.length > 0){
                             result = new byte[tmp1.length % tmp.length];
                             System.arraycopy(tmp1, tmp1.length - result.length, result, 0, result.length);

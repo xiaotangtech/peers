@@ -33,15 +33,16 @@ public class G729Encoder extends Encoder{
 
 
     public byte[] encodePcm2G729(byte[] src){
-        byte[] result = new byte[src.length / 16];
+        // byte[] result = new byte[src.length / 16];
 
-        for(int i = 0;i<src.length/160;i++){
-            byte[] temp = new byte[160];
-            System.arraycopy(src, i*160, temp, 0, 160);
-            byte[] process = encoder.process(temp);//10
-            System.arraycopy(process, 0,result , i*10, 10);
-        }
-        return result;
+        // for(int i = 0;i<src.length/160;i++){
+        //     byte[] temp = new byte[160];
+        //     System.arraycopy(src, i*160, temp, 0, 160);
+        //     byte[] process = encoder.process(temp);//10
+        //     System.arraycopy(process, 0,result , i*10, 10);
+        // }
+        // return result;
+        return encoder.process(src);
     }
 
     public byte[] pcm2g729(byte[] data) {
