@@ -140,6 +140,7 @@ public class Capture implements Runnable {
                         logger.error("encode error", e);
                     }
 
+
 //                    try {
 //                        logger.info("buffer size=" + buffer.length);
 //                        if (result.length > 0) {
