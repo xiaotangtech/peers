@@ -65,6 +65,8 @@ public class Capture implements Runnable {
 
     public void run() {
         byte[] buffer;
+
+        int process_size = 160;
         byte[] result = new byte[0];
 
         while (!isStopped) {
@@ -94,45 +96,87 @@ public class Capture implements Runnable {
                     //     rawData.write(encoder.process(result));
                     //     rawData.flush();
                     // }
-                    byte[] tmp = new byte[160];
-                    byte[] tmp1 = new byte[0];
-                    try{
-                        logger.info("buffer size=" + buffer.length);
-                    if(result.length > 0){
-                        try {
-                            tmp1 = new byte[result.length + buffer.length];
-                            System.arraycopy(result, 0, tmp1, 0, result.length);
-                            System.arraycopy(buffer, 0, tmp1, result.length, buffer.length);
-                        } catch (Exception e) {
-                            logger.error("encode error", e);
+//                    byte[] tmp = new byte[160];
+//                    byte[] tmp1 = new byte[0];
+
+                    byte[] process = new byte[process_size];
+                    byte[] temp = new byte[buffer.length];
+                    try {
+                        if (buffer.length > 0) {
+
+                            if (result.length > 0) {
+                                temp = new byte[result.length + temp.length];
+                                System.arraycopy(result, 0, temp, 0, result.length);
+                            }
+
+                            System.arraycopy(buffer, 0, temp, result.length, buffer.length);
+
+                            if (temp.length >= process_size) {
+
+                                for (int i = 0; i < temp.length / process_size; i++) {
+                                    System.arraycopy(temp, i * process_size, process, 0, process_size);
+                                    rawData.write(encoder.process(process));
+                                    rawData.flush();
+                                }
+
+                                if (temp.length % process_size > 0) {
+                                    result = new byte[temp.length % process_size];
+                                    System.arraycopy(temp, temp.length - result.length, result, 0, result.length);
+                                } else {
+                                    result = new byte[0];
+                                }
+                            } else {
+                                result = temp;
+                            }
                         }
-                        // System.exit(0);
-                    }else{
-                        tmp1 = new byte[buffer.length];
-                        System.arraycopy(buffer, 0, tmp1, 0, buffer.length);
+                        if (buffer.length <= 0 && result.length > 0) {
+                            process = new byte[process_size];
+                            System.arraycopy(result, 0, process, 0, result.length);
+                            rawData.write(encoder.process(process));
+                            rawData.flush();
+                        }
+
+                    }catch (Exception e) {
+                        logger.error("encode error", e);
                     }
-                    if(tmp1.length > tmp.length){
-                        for(int i = 0; i < tmp1.length / tmp.length; i++){
-                            System.arraycopy(tmp1, i * tmp.length, tmp, 0, tmp.length);
-                            rawData.write(encoder.process(tmp));
-                        }
-                        rawData.flush();
-                        if(tmp1.length % tmp.length > 0){
-                            result = new byte[tmp1.length % tmp.length];
-                            System.arraycopy(tmp1, tmp1.length - result.length, result, 0, result.length);
-                        }else{
-                            result = new byte[0];
-                        }
-                    }else if(tmp1.length < tmp.length){
-                        result = tmp1;
-                    }else{
-                        tmp = tmp1;
-                        rawData.write(encoder.process(tmp));
-                        rawData.flush();
-                    }
-                }catch(Exception e){
-                    logger.error("encode error",e);
-                }
+
+//                    try {
+//                        logger.info("buffer size=" + buffer.length);
+//                        if (result.length > 0) {
+//                            try {
+//                                tmp1 = new byte[result.length + buffer.length];
+//                                System.arraycopy(result, 0, tmp1, 0, result.length);
+//                                System.arraycopy(buffer, 0, tmp1, result.length, buffer.length);
+//                            } catch (Exception e) {
+//                                logger.error("encode error", e);
+//                            }
+//                            // System.exit(0);
+//                        } else {
+//                            tmp1 = new byte[buffer.length];
+//                            System.arraycopy(buffer, 0, tmp1, 0, buffer.length);
+//                        }
+//                        if (tmp1.length > tmp.length) {
+//                            for (int i = 0; i < tmp1.length / tmp.length; i++) {
+//                                System.arraycopy(tmp1, i * tmp.length, tmp, 0, tmp.length);
+//                                rawData.write(encoder.process(tmp));
+//                            }
+//                            rawData.flush();
+//                            if (tmp1.length % tmp.length > 0) {
+//                                result = new byte[tmp1.length % tmp.length];
+//                                System.arraycopy(tmp1, tmp1.length - result.length, result, 0, result.length);
+//                            } else {
+//                                result = new byte[0];
+//                            }
+//                        } else if (tmp1.length < tmp.length) {
+//                            result = tmp1;
+//                        } else {
+//                            tmp = tmp1;
+//                            rawData.write(encoder.process(tmp));
+//                            rawData.flush();
+//                        }
+//                    } catch (Exception e) {
+//                        logger.error("encode error", e);
+//                    }
 
 
                 } else {
