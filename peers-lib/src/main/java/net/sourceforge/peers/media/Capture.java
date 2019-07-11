@@ -103,9 +103,6 @@ public class Capture implements Runnable {
                             tmp1 = new byte[result.length + buffer.length];
                             System.arraycopy(result, 0, tmp1, 0, result.length);
                             System.arraycopy(buffer, 0, tmp1, result.length, buffer.length);
-
-                            result = new byte[buffer.length - 160 + result.length];
-                            System.arraycopy(buffer, 160 - result.length, result, 0, result.length);
                         } catch (Exception e) {
                             logger.error("encode error", e);
                         }
