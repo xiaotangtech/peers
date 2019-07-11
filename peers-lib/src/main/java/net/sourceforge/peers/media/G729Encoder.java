@@ -45,18 +45,6 @@ public class G729Encoder extends Encoder{
         return result;
     }
 
-    public byte[] concatByte(byte[] b1, byte[] b2) {
-        byte[] concatByte = new byte[b1.length + b2.length];
-        for (int i = 0; i < concatByte.length; i++) {
-            if (i < b1.length) {
-                concatByte[i] = b1[i];
-            } else {
-                concatByte[i] = b2[i - b1.length];
-            }
-        }
-        return concatByte;
-    }
-
     public byte[] pcm2g729(byte[] data) {
         ByteArrayOutputStream dstBuffer = new ByteArrayOutputStream();
         try {
