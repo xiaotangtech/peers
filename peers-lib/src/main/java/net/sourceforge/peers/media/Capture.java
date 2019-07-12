@@ -63,7 +63,7 @@ public class Capture implements Runnable {
 
         int process_size = 80;
 
-        int process_encoder_size = process_size*2;
+        int process_encoder_size = process_size * 2;
 
         byte[] next_byte = new byte[0];
 
@@ -77,6 +77,7 @@ public class Capture implements Runnable {
                 }
                 if (payloadType == RFC3551.PAYLOAD_TYPE_G729) {
                     byte[] process = new byte[process_size];
+                    byte[] process_encoder = new byte[process_encoder_size];
                     byte[] temp = new byte[buffer.length];
                     try {
                         if (buffer.length > 0) {
@@ -111,10 +112,27 @@ public class Capture implements Runnable {
 
                         result = concatByte(result, process);
 
-                        if(result.length==process_encoder_size){
-                            rawData.write(encoder.process(result));
-                            rawData.flush();
+                        int ptimes = result.length / process_encoder_size;
+
+                        if (ptimes >= 1) {
+                            logger.debug("encode ptimes:" + ptimes);
+                            process_encoder = new byte[process_encoder_size];
+                            for (int i = 0; i < ptimes; i++) {
+                                System.arraycopy(result, i * process_encoder_size, process_encoder, 0, process_encoder_size);
+                                rawData.write(encoder.process(process_encoder));
+                                rawData.flush();
+                            }
                         }
+
+                        int result_len = result.length % process_encoder_size;
+                        if (result_len > 0) {
+                            byte[] result_temp = new byte[result_len];
+                            System.arraycopy(result, result.length - result_len, result_temp, 0, result_len);
+                            result = result_temp;
+                        } else {
+                            result = new byte[0];
+                        }
+
                     } catch (Exception e) {
                         logger.error("encode error", e);
                     }
