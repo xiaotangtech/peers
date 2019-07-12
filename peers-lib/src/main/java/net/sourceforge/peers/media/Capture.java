@@ -51,13 +51,23 @@ public class Capture implements Runnable {
         this.payloadType = payloadType;
     }
 
+    private byte[] concatByte(byte[] b1, byte[] b2) {
+        byte[] concatByte = new byte[b1.length + b2.length];
+        System.arraycopy(b1, 0, concatByte, 0, b1.length);
+        System.arraycopy(b2, 0, concatByte, b1.length, b2.length);
+        return concatByte;
+    }
+
     public void run() {
         byte[] buffer;
 
-        int process_size = 320;
-//        byte[] result = new byte[0];
+        int process_size = 80;
+
+        int process_encoder_size = process_size*2;
 
         byte[] next_byte = new byte[0];
+
+        byte[] result = new byte[0];
 
         while (!isStopped) {
             buffer = soundSource.readData();
@@ -98,9 +108,13 @@ public class Capture implements Runnable {
                             process = new byte[process_size];
                             System.arraycopy(next_byte, 0, process, 0, next_byte.length);
                         }
-                        rawData.write(encoder.process(process));
-                        rawData.flush();
 
+                        result = concatByte(result, process);
+
+                        if(result.length==process_encoder_size){
+                            rawData.write(encoder.process(result));
+                            rawData.flush();
+                        }
                     } catch (Exception e) {
                         logger.error("encode error", e);
                     }
