@@ -128,7 +128,6 @@ public class RtpSender implements Runnable {
             } else {
                 trimmedBuffer = buffer;
             }
-            logger.debug("RtpSender 一次发送前数据length：" + trimmedBuffer.length);
             if (mediaDebug) {
                 try {
                     rtpSenderInput.write(trimmedBuffer); // TODO use classpath
@@ -163,9 +162,6 @@ public class RtpSender implements Runnable {
                 firstTime = false;
                 continue;
             }
-//            if(codec.getPayloadType()== RFC3551.PAYLOAD_TYPE_G729){
-//                rtpSession.send(rtpPacket);
-//            }else{
             sleepTime = 19500000 - (System.nanoTime() - lastSentTime) + offset;
             if (sleepTime > 0) {
                 logger.info("sleeptime " + sleepTime);
