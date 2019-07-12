@@ -116,7 +116,6 @@ public class Capture implements Runnable {
 
                         if (ptimes >= 1) {
                             logger.debug("encode ptimes:" + ptimes);
-                            process_encoder = new byte[process_encoder_size];
                             for (int i = 0; i < ptimes; i++) {
                                 System.arraycopy(result, i * process_encoder_size, process_encoder, 0, process_encoder_size);
                                 rawData.write(encoder.process(process_encoder));
