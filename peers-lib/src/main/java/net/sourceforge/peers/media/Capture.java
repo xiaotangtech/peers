@@ -63,7 +63,11 @@ public class Capture implements Runnable {
 
         int process_size = 80;
 
-        int process_encoder_size = process_size * 2;
+        int process_encoder_size = process_size * 4;
+
+        byte[] process = new byte[process_size];
+
+        byte[] process_encoder = new byte[process_encoder_size];
 
         byte[] next_byte = new byte[0];
 
@@ -76,8 +80,7 @@ public class Capture implements Runnable {
                     break;
                 }
                 if (payloadType == RFC3551.PAYLOAD_TYPE_G729) {
-                    byte[] process = new byte[process_size];
-                    byte[] process_encoder = new byte[process_encoder_size];
+
                     byte[] temp = new byte[buffer.length];
                     try {
                         if (buffer.length > 0) {
@@ -90,20 +93,18 @@ public class Capture implements Runnable {
 
                             int times = temp.length / process_size;
 
-                            if (times > 0) {
-                                if (times >= 1) {
-                                    process = new byte[times * process_size];
-                                    for (int i = 0; i < times; i++) {
-                                        System.arraycopy(temp, i * process_size, process, i * process_size, process_size);
-                                    }
+                            if (times >= 0) {
+                                process = new byte[times * process_size];
+                                for (int i = 0; i < times; i++) {
+                                    System.arraycopy(temp, i * process_size, process, i * process_size, process_size);
                                 }
-                                int next_len = temp.length % process_size;
-                                if (next_len > 0) {
-                                    next_byte = new byte[next_len];
-                                    System.arraycopy(temp, temp.length - next_len, next_byte, 0, next_len);
-                                } else {
-                                    next_byte = new byte[0];
-                                }
+                            }
+                            int next_len = temp.length % process_size;
+                            if (next_len > 0) {
+                                next_byte = new byte[next_len];
+                                System.arraycopy(temp, temp.length - next_len, next_byte, 0, next_len);
+                            } else {
+                                next_byte = new byte[0];
                             }
                         } else if (next_byte.length > 0) {
                             process = new byte[process_size];
@@ -114,15 +115,13 @@ public class Capture implements Runnable {
 
                         int ptimes = result.length / process_encoder_size;
 
-                        if (ptimes >= 1) {
-                            logger.debug("encode ptimes:" + ptimes);
+                        if (ptimes >= 0) {
                             for (int i = 0; i < ptimes; i++) {
                                 System.arraycopy(result, i * process_encoder_size, process_encoder, 0, process_encoder_size);
                                 rawData.write(encoder.process(process_encoder));
-                                rawData.flush();
                             }
+                            rawData.flush();
                         }
-
                         int result_len = result.length % process_encoder_size;
                         if (result_len > 0) {
                             byte[] result_temp = new byte[result_len];
