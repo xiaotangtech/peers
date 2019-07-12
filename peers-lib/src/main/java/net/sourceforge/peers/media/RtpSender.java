@@ -167,7 +167,11 @@ public class RtpSender implements Runnable {
                 logger.info("sleeptime " + sleepTime);
                 try {
                     logger.info("sleep " + Math.round(sleepTime / 1000000f));
-                    Thread.sleep(Math.round(sleepTime / 1000000f));
+                    if (codec.getPayloadType() == RFC3551.PAYLOAD_TYPE_G729) {
+                        Thread.sleep(19);
+                    } else {
+                        Thread.sleep(Math.round(sleepTime / 1000000f));
+                    }
                 } catch (InterruptedException e) {
                     logger.error("Thread interrupted", e);
                     return;

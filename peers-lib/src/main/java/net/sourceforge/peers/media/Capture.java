@@ -63,7 +63,7 @@ public class Capture implements Runnable {
 
         int process_size = 80;
 
-        int process_encoder_size = process_size * 4;
+        int process_encoder_size = process_size * 2;
 
         byte[] process = new byte[process_size];
 
