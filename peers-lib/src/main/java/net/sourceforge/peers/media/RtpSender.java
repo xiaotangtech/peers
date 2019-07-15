@@ -166,10 +166,11 @@ public class RtpSender implements Runnable {
             if (sleepTime > 0) {
                 logger.info("sleeptime " + sleepTime);
                 try {
-                    logger.info("sleep " + Math.round(sleepTime / 1000000f));
                     if (codec.getPayloadType() == RFC3551.PAYLOAD_TYPE_G729) {
+                        logger.info("sleep " +19);
                         Thread.sleep(19);
                     } else {
+                        logger.info("sleep " + Math.round(sleepTime / 1000000f));
                         Thread.sleep(Math.round(sleepTime / 1000000f));
                     }
                 } catch (InterruptedException e) {
@@ -186,7 +187,6 @@ public class RtpSender implements Runnable {
                     offset = sleepTime + 20000000;
                 }
             }
-//            }
         }
         if (mediaDebug) {
             try {
