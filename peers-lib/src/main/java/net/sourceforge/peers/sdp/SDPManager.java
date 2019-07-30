@@ -49,18 +49,19 @@ public class SDPManager {
         random = new Random();
         //TODO retrieve codecs from configuration file
 
-        Config config = userAgent.getConfig();
-        String iscodecstr = config.getCustomSipHeaders().get("X-DTai-ISCodec");
-
-        int iscodec = Integer.parseInt(iscodecstr);
+//        Config config = userAgent.getConfig();
+//
+//        String iscodecstr = config.getCustomSipHeaders().get("X-DTai-ISCodec");
+//
+//        int iscodec = Integer.parseInt(iscodecstr);
 
         Codec codec = null;
-        if(iscodec==1){
-            codec = new Codec();
-            codec.setPayloadType(RFC3551.PAYLOAD_TYPE_G729);
-            codec.setName(RFC3551.G729);
-            supportedCodecs.add(codec);
-        }
+//        if(iscodec==1){
+//            codec = new Codec();
+//            codec.setPayloadType(RFC3551.PAYLOAD_TYPE_G729);
+//            codec.setName(RFC3551.G729);
+//            supportedCodecs.add(codec);
+//        }
         codec = new Codec();
         codec.setPayloadType(RFC3551.PAYLOAD_TYPE_PCMU);
         codec.setName(RFC3551.PCMU);
