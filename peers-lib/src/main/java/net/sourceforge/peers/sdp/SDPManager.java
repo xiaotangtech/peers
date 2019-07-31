@@ -33,14 +33,14 @@ import net.sourceforge.peers.rtp.RFC4733;
 import net.sourceforge.peers.sip.core.useragent.UserAgent;
 
 public class SDPManager {
-    
+
     private SdpParser sdpParser;
     private UserAgent userAgent;
     private List<Codec> supportedCodecs;
     private Random random;
 
     private Logger logger;
-    
+
     public SDPManager(UserAgent userAgent, Logger logger) {
         this.userAgent = userAgent;
         this.logger = logger;
@@ -63,6 +63,9 @@ public class SDPManager {
 //            supportedCodecs.add(codec);
 //        }
         codec = new Codec();
+        codec.setPayloadType(RFC3551.PAYLOAD_TYPE_G729);
+        codec.setName(RFC3551.G729);
+        codec = new Codec();
         codec.setPayloadType(RFC3551.PAYLOAD_TYPE_PCMU);
         codec.setName(RFC3551.PCMU);
         supportedCodecs.add(codec);
@@ -77,7 +80,7 @@ public class SDPManager {
         //TODO add fmtp:101 0-15 attribute
         supportedCodecs.add(codec);
     }
-    
+
     public SessionDescription parse(byte[] sdp) {
         try {
             return sdpParser.parse(sdp);
@@ -91,19 +94,19 @@ public class SDPManager {
             SessionDescription sessionDescription) throws NoCodecException {
         InetAddress destAddress = sessionDescription.getIpAddress();
         List<MediaDescription> mediaDescriptions = sessionDescription.getMediaDescriptions();
-        for (MediaDescription mediaDescription: mediaDescriptions) {
+        for (MediaDescription mediaDescription : mediaDescriptions) {
             if (RFC4566.MEDIA_AUDIO.equals(mediaDescription.getType())) {
-                for (Codec offerCodec: mediaDescription.getCodecs()) {
+                for (Codec offerCodec : mediaDescription.getCodecs()) {
                     if (supportedCodecs.contains(offerCodec)) {
                         String offerCodecName = offerCodec.getName();
                         if (offerCodecName.equalsIgnoreCase(RFC3551.PCMU) ||
-                                offerCodecName.equalsIgnoreCase(RFC3551.PCMA)||offerCodecName.equalsIgnoreCase(RFC3551.G729)) {
+                                offerCodecName.equalsIgnoreCase(RFC3551.PCMA) || offerCodecName.equalsIgnoreCase(RFC3551.G729)) {
                             int destPort = mediaDescription.getPort();
                             if (mediaDescription.getIpAddress() != null) {
                                 destAddress = mediaDescription.getIpAddress();
                             }
                             MediaDestination mediaDestination =
-                                new MediaDestination();
+                                    new MediaDestination();
                             mediaDestination.setDestination(
                                     destAddress.getHostAddress());
                             mediaDestination.setPort(destPort);
@@ -118,7 +121,7 @@ public class SDPManager {
     }
 
     public SessionDescription createSessionDescription(SessionDescription offer,
-            int localRtpPort)
+                                                       int localRtpPort)
             throws IOException {
         SessionDescription sessionDescription = new SessionDescription();
         sessionDescription.setUsername("user1");
@@ -137,10 +140,10 @@ public class SDPManager {
             codecs = supportedCodecs;
         } else {
             codecs = new ArrayList<Codec>();
-            for (MediaDescription mediaDescription:
+            for (MediaDescription mediaDescription :
                     offer.getMediaDescriptions()) {
                 if (RFC4566.MEDIA_AUDIO.equals(mediaDescription.getType())) {
-                    for (Codec codec: mediaDescription.getCodecs()) {
+                    for (Codec codec : mediaDescription.getCodecs()) {
                         if (supportedCodecs.contains(codec)) {
                             codecs.add(codec);
                         }
@@ -156,7 +159,7 @@ public class SDPManager {
         mediaDescription.setPort(localRtpPort);
         mediaDescription.setCodecs(codecs);
         List<MediaDescription> mediaDescriptions =
-            new ArrayList<MediaDescription>();
+                new ArrayList<MediaDescription>();
         mediaDescriptions.add(mediaDescription);
         sessionDescription.setMediaDescriptions(mediaDescriptions);
         return sessionDescription;
