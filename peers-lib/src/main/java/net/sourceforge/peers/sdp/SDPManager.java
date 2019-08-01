@@ -49,30 +49,51 @@ public class SDPManager {
         random = new Random();
         //TODO retrieve codecs from configuration file
 
-//        Config config = userAgent.getConfig();
-//
-//        String iscodecstr = config.getCustomSipHeaders().get("X-DTai-ISCodec");
-//
-//        int iscodec = Integer.parseInt(iscodecstr);
+        Config config = userAgent.getConfig();
+
+        int iscodec = 0;
+        if(config.getCustomSipHeaders()!=null){
+            String iscodecstr = config.getCustomSipHeaders().get("X-DTai-ISCodec");
+            if(!"".equals(iscodecstr)||iscodecstr!=null){
+                iscodec = Integer.parseInt(iscodecstr);
+            }
+        }
 
         Codec codec = null;
-//        if(iscodec==1){
-//            codec = new Codec();
-//            codec.setPayloadType(RFC3551.PAYLOAD_TYPE_G729);
-//            codec.setName(RFC3551.G729);
-//            supportedCodecs.add(codec);
-//        }
-        codec = new Codec();
-        codec.setPayloadType(RFC3551.PAYLOAD_TYPE_G729);
-        codec.setName(RFC3551.G729);
-        codec = new Codec();
-        codec.setPayloadType(RFC3551.PAYLOAD_TYPE_PCMU);
-        codec.setName(RFC3551.PCMU);
-        supportedCodecs.add(codec);
-        codec = new Codec();
-        codec.setPayloadType(RFC3551.PAYLOAD_TYPE_PCMA);
-        codec.setName(RFC3551.PCMA);
-        supportedCodecs.add(codec);
+
+        if (iscodec == 1) {
+            logger.info("SDPManager: G729");
+            codec = new Codec();
+            codec.setPayloadType(RFC3551.PAYLOAD_TYPE_G729);
+            codec.setName(RFC3551.G729);
+            supportedCodecs.add(codec);
+        }
+        if (iscodec == 0) {
+            logger.info("SDPManager: G711");
+            codec = new Codec();
+            codec.setPayloadType(RFC3551.PAYLOAD_TYPE_PCMU);
+            codec.setName(RFC3551.PCMU);
+            supportedCodecs.add(codec);
+            codec = new Codec();
+            codec.setPayloadType(RFC3551.PAYLOAD_TYPE_PCMA);
+            codec.setName(RFC3551.PCMA);
+            supportedCodecs.add(codec);
+        }
+        if (iscodec == 2) {
+            logger.info("SDPManager: G729 G711");
+            codec = new Codec();
+            codec.setPayloadType(RFC3551.PAYLOAD_TYPE_G729);
+            codec.setName(RFC3551.G729);
+            supportedCodecs.add(codec);
+            codec = new Codec();
+            codec.setPayloadType(RFC3551.PAYLOAD_TYPE_PCMU);
+            codec.setName(RFC3551.PCMU);
+            supportedCodecs.add(codec);
+            codec = new Codec();
+            codec.setPayloadType(RFC3551.PAYLOAD_TYPE_PCMA);
+            codec.setName(RFC3551.PCMA);
+            supportedCodecs.add(codec);
+        }
 
         codec = new Codec();
         codec.setPayloadType(RFC4733.PAYLOAD_TYPE_TELEPHONE_EVENT);
