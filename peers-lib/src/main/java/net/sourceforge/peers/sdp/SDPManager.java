@@ -54,7 +54,7 @@ public class SDPManager {
         int iscodec = 0;
         if(config.getCustomSipHeaders()!=null){
             String iscodecstr = config.getCustomSipHeaders().get("X-DTai-ISCodec");
-            if(!"".equals(iscodecstr)||iscodecstr!=null){
+            if(!"".equals(iscodecstr)&&iscodecstr!=null){
                 iscodec = Integer.parseInt(iscodecstr);
             }
         }
