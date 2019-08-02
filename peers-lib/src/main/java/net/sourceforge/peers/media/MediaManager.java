@@ -61,10 +61,10 @@ public class MediaManager {
             return;
         }
         
-        // if(rtpSession == null){
+        if(rtpSession == null){
             rtpSession = new RtpSession(inetAddress, datagramSocket,
                     userAgent.isMediaDebug(), logger, userAgent.getPeersHome());
-        // }
+        }
         try {
             inetAddress = InetAddress.getByName(remoteAddress);
             rtpSession.setRemoteAddress(inetAddress);
@@ -151,9 +151,11 @@ public class MediaManager {
 
     private void startRtpSession(String destAddress, int destPort,
         Codec codec, SoundSource soundSource) {
-        rtpSession = new RtpSession(userAgent.getConfig()
-                .getLocalInetAddress(), datagramSocket,
-                userAgent.isMediaDebug(), logger, userAgent.getPeersHome());
+            if(rtpSession == null){
+                rtpSession = new RtpSession(userAgent.getConfig()
+                        .getLocalInetAddress(), datagramSocket,
+                        userAgent.isMediaDebug(), logger, userAgent.getPeersHome());
+            }
 
         try {
             InetAddress inetAddress = InetAddress.getByName(destAddress);
