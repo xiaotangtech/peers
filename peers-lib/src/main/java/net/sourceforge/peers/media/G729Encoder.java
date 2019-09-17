@@ -25,7 +25,7 @@ public class G729Encoder extends Encoder{
     @Override
     public byte[] process(byte[] media) {
         byte[] bytes = encodePcm2G729(media);
-        logger.debug("G729 Encode after size: "+bytes.length);
+//        logger.debug("G729 Encode after size: "+bytes.length);
         return bytes;
     }
 

@@ -126,7 +126,7 @@ public class PcmuEncoder extends Encoder {
             short sample = (short) ((media[j++] & 0xff) | ((media[j++]) << 8));
             compressed[i] = linear2ulaw(sample);
         }
-        logger.debug("PcmU Encode after size: "+compressed.length);
+//        logger.debug("PcmU Encode after size: "+compressed.length);
         return compressed;
     }
 

@@ -23,7 +23,7 @@ public class G729Decoder extends Decoder {
     @Override
     public byte[] process(byte[] media) {
         byte[] g7292pcm = g7292pcm(media);
-        logger.debug("G729 Decode after size: "+g7292pcm.length);
+//        logger.debug("G729 Decode after size: "+g7292pcm.length);
         return g7292pcm;
     }
 

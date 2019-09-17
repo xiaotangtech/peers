@@ -110,7 +110,7 @@ public class RtpSession {
             return;
         }
         byte[] buf = rtpParser.encode(rtpPacket);
-        logger.info("rtp send " + buf.length);
+//        logger.info("rtp send " + buf.length);
         final DatagramPacket datagramPacket =
                 new DatagramPacket(buf, buf.length,
                 remoteAddress, remotePort);
