@@ -234,7 +234,7 @@ public class RtpSession {
             int offset = datagramPacket.getOffset();
             int length = datagramPacket.getLength();
             byte[] trimmedData = new byte[length];
-            logger.info("rtp received " + length);
+//            logger.info("rtp received " + length);
             System.arraycopy(data, offset, trimmedData, 0, length);
             if (mediaDebug) {
                 try {
