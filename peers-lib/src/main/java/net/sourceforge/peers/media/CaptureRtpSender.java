@@ -38,6 +38,7 @@ public class CaptureRtpSender {
     private Capture capture;
     private Encoder encoder;
     private RtpSender rtpSender;
+    private CountDownLatch latch;
 
     public CaptureRtpSender(RtpSession rtpSession, SoundSource soundSource,
                             boolean mediaDebug, Codec codec, Logger logger, String peersHome)
@@ -47,7 +48,7 @@ public class CaptureRtpSender {
         // the use of PipedInputStream and PipedOutputStream in Capture,
         // Encoder and RtpSender imposes a synchronization point at the
         // end of life of those threads to a void read end dead exceptions
-        CountDownLatch latch = new CountDownLatch(3);
+        latch = new CountDownLatch(3);
         // CountDownLatch latch = new CountDownLatch(2);
         PipedOutputStream rawDataOutput = new PipedOutputStream();
         PipedInputStream rawDataInput;
@@ -119,6 +120,10 @@ public class CaptureRtpSender {
         if (rtpSender != null) {
             rtpSender.setStopped(true);
         }
+
+        latch.countDown();
+        latch.countDown();
+        latch.countDown();
     }
 
     public synchronized RtpSession getRtpSession() {

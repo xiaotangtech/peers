@@ -449,8 +449,12 @@ public class TransportManager {
             new PrivilegedAction<Void>() {
                 // @Override
                 public Void run() {
-                    for (DatagramSocket datagramSocket: datagramSockets.values()) {
-                        datagramSocket.close();
+                    for (DatagramSocket datagramSocket : datagramSockets.values()) {
+                        try {
+                            datagramSocket.close();
+                        } catch (Exception ex) {
+                            logger.error("close transport fail: " + ex.getMessage(), ex);
+                        }
                     }
                     return null;
                 }

@@ -72,6 +72,10 @@ public class UdpMessageSender extends MessageSender {
                 // @Override
                 public Void run() {
                     try {
+                        if(datagramSocket.isClosed()){
+                            return null;
+                        }
+
                         logger.debug(datagramSocket.getLocalAddress().toString());
                         datagramSocket.send(packet);
                     } catch (Throwable t) {
