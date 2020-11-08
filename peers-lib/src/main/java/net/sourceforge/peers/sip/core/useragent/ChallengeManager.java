@@ -56,7 +56,7 @@ public class ChallengeManager implements MessageInterceptor {
     private String cnonce;
     private String authorizationUsername;
     
-    private static volatile int nonceCount = 1;
+    private volatile int nonceCount = 1;
     private String nonceCountHex;
 
     private Config config;
